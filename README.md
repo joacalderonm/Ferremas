@@ -10,3 +10,4 @@ Para configurar el entorno de FrontEnd.
             postcss
             @heroicons/react     
             prop-types      
+    - iniciarlizar proyecto npm run dev
