@@ -1,5 +1,6 @@
 import '../css/Header.css'
-import { SearchIcon, ShoppingBagIcon } from '@heroicons/react' // Asegúrate de tener Heroicons instalados
+import { MagnifyingGlassCircleIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'; // Asegúrate de tener Heroicons instalados
+
 
 
 export const Header = () => {
@@ -28,7 +29,7 @@ export const Header = () => {
             <div className="hidden md:flex border-2 border-red-500 rounded overflow-hidden">
               <input type="search" placeholder="Buscar..." className="px-1 py-1 bg-black text-white focus:outline-none" />
               <button className="bg-red-500 px-3 py-1 hover:bg-red-600">
-                <SearchIcon className="h-5 w-5 text-white"/>
+                <MagnifyingGlassCircleIcon className="h-5 w-5 text-white"/>
               </button>
             </div>
             <button className="ml-4 bg-red-500 hover:bg-red-600 px-3 py-1 rounded flex items-center">
