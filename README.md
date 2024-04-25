@@ -8,3 +8,6 @@ Para configurar el entorno de FrontEnd.
             tailwind
             autoprefixer
             postcss
+            @heroicons/react     
+            prop-types      
+    - iniciarlizar proyecto npm run dev
