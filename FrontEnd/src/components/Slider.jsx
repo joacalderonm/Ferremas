@@ -1,7 +1,8 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import '../css/Slider.css'; // Importa tus estilos de Tailwind aquí si los tienes
+import '../css/Styles.css'
+   // Importa tus estilos de Tailwind aquí si los tienes
 export const Slider = () => {
     return (
       <div>

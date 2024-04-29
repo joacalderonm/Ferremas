@@ -1,4 +1,4 @@
-import '../css/Ofertas.css'
+import '../css/Styles.css'
 
 export const Ofertas = () => {
   // Supongamos que tienes un array de ofertas con la siguiente estructura:
