@@ -5,7 +5,7 @@ export function Index(){
     return (
         <Layout>
             {/*Contenido */}
-           <Slider/>
+            <Slider/>
             <Ofertas/>
         </Layout>
     )
