@@ -1,8 +1,8 @@
 import express, { json } from 'express';
-import { createFerremaRouter } from './routes/ferremas.js';
 import { corsMiddleware } from './middlewares/cors.js';
+import { createProductoRouter } from './routes/producto.js';
 
-export const createApp = ({ ferremaModel }) =>{
+export const createApp = ({ productoModel }) =>{
 
   const app = express();
 
@@ -16,7 +16,9 @@ export const createApp = ({ ferremaModel }) =>{
   app.disable('x-powered-by');
   
   // Montar el router 'ferremas' para manejar todas las rutas relacionadas con 'ferremas'
-  app.use('/ferremas', createFerremaRouter ({ ferremaModel }));
+  //app.use('/ferremas', createFerremaRouter ({ ferremaModel }));
+
+  app.use('/producto', createProductoRouter ({ productoModel }));
   
   // Establecer el puerto del servidor desde una variable de entorno o usar 1234 como predeterminado
   const PORT = process.env.PORT ?? 1234;

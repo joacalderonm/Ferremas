@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../css/Styles.css';
 import { MagnifyingGlassCircleIcon, UserIcon, ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/solid';
 import logo from '../assets/LogoFerremas.png';
+
 
 export const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false); // Estado para controlar la visibilidad del Sidebar
@@ -55,9 +57,10 @@ export const Header = () => {
 </div>
 
       <div className={isSidebarOpen ? "Sidebar open" : "Sidebar"}>
-        <a href="/" className="textsidebar">Inicio</a>
-        <a href="/categorías" className="textsidebar">Categorías</a>
-        <a href="/nosotros" className="textsidebar">Nosotros</a>
+        
+        <Link to="/" className="textsidebar">Inicio</Link>
+        <Link to="/categoria" className="textsidebar">Categorías</Link>
+        <Link to="/nosotros" className="textsidebar">Nosotros</Link>
       </div>
     </header>
   );

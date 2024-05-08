@@ -4,7 +4,7 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 
 
-export function Layout ({ children }) {
+function Layout({ children }) {
     return(
         <>
             <Header/>
@@ -20,3 +20,5 @@ export function Layout ({ children }) {
 Layout.propTypes = {
     children: PropTypes.node.isRequired
   };
+  
+export default Layout;

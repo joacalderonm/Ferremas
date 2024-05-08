@@ -1,5 +1,5 @@
 import { createApp } from './app.js'
 
-import { FerremasModel } from './models/database/ferrema.js'
+import { ProductoModel } from './models/database/producto.js'
 
-createApp({ ferremaModel: FerremasModel })
+createApp({ productoModel: ProductoModel })
