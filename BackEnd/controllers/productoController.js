@@ -1,4 +1,4 @@
-import { validatePartialProducto, validateProducto } from "../schemas/producto.js"
+import { validatePartialProducto, validateProducto } from "../schemas/productoSchema.js"
 
 export class ProductoController {
     

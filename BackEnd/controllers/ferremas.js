@@ -56,5 +56,6 @@ export class FerremasController {
         const updateFerremas = await this.ferremaModel.update({ id, input: result.data })
     
         return res.json(updateFerremas)
+        
     }
 }

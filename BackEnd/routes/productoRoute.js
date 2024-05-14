@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ProductoController } from "../controllers/producto.js";
+import { ProductoController } from "../controllers/productoController.js";
 
 export const createProductoRouter = ({ productoModel }) => {
 
