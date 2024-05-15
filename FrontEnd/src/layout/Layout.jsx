@@ -8,7 +8,7 @@ function Layout({ children }) {
     return(
         <>
             <Header/>
-            <main className='md:container md:mx-auto p-4'>
+            <main className=''>
                 {children}
 
             </main>                

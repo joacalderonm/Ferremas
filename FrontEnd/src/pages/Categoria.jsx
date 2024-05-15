@@ -1,12 +1,11 @@
-import Producto from "../components/Producto";
+import Categorias from '../components/Categorias';
 
 function Categoria() {
     return (
-        <div>
-            {/* Contenido de la página Categoria */}
-            <h1> Categorias </h1>
-            <Producto />
-        </div>
+   
+       
+          <Categorias />
+       
     );
 }
 

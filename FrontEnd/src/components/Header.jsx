@@ -1,67 +1,46 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import '../css/Styles.css';
-import { MagnifyingGlassCircleIcon, UserIcon, ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/solid';
-import logo from '../assets/LogoFerremas.png';
+import '../css/Styles.css'
+import { MagnifyingGlassCircleIcon, ShoppingBagIcon } from '@heroicons/react/24/solid'; // Asegúrate de tener Heroicons instalados
+import logo from '../assets/Logo.png'
 
 
 export const Header = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false); // Estado para controlar la visibilidad del Sidebar
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen); // Función para alternar la visibilidad del Sidebar
-  };
-
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      // Verificar si el clic fue fuera del sidebar y si el sidebar está abierto
-      if (isSidebarOpen && !document.querySelector('.Sidebar').contains(event.target)) {
-        setSidebarOpen(false);
-      }
-    };
-
-    // Añadir y remover el manejador de eventos
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => document.removeEventListener('mousedown', handleOutsideClick);
-  }, [isSidebarOpen]); // Depende del estado de isSidebarOpen
-
-  return (
-    <header className="header">
-      <div className='img-logo'>
-        <img src={logo} alt="logo"/>
-      </div>
-      <div className='allbox'>
-      <div className="search-bar">
-  <input type="search" placeholder="Buscar..." className="px-1 py-1 bg-black text-white focus:outline-none" />
-  <button className="search-button">
-    <MagnifyingGlassCircleIcon className="icon-size"/>
-  </button>
-</div>
-
-        <div className="flex space-x-10">
-          <button className=''>
-            <UserIcon className="h-6 w-6 text-black"/> {/* Placeholder para el primer icono */}
-          </button>
-          <button>
-            <HeartIcon className="h-6 w-6 text-gray"/> {/* Placeholder para el segundo icono */}
-          </button>
-          <button>
-            <ShoppingCartIcon className="h-6 w-6 text-gray"/> {/* Placeholder para el tercer icono */}
-          </button>
-        </div>
-      </div>
-      <div className='buttons'>
-  <button onClick={toggleSidebar} className="menu-button1"> Menu Categorias</button>
-  <button className="menu-button">Nosotros</button>
-  <button className="menu-button">Ofertas</button>
-</div>
-
-      <div className={isSidebarOpen ? "Sidebar open" : "Sidebar"}>
+    return (
+        <header className="header ">
         
-        <Link to="/" className="textsidebar">Inicio</Link>
-        <Link to="/categoria" className="textsidebar">Categorías</Link>
-        <Link to="/nosotros" className="textsidebar">Nosotros</Link>
-      </div>
-    </header>
-  );
+          {/* Logo y nombre de la tienda */}
+          <div className="logo">
+          
+          <img className='img-header' src={logo} alt='logo'/>
+             <span className="font-bold uppercase">FerreMas</span>
+          </div>
+    
+          {/* Navegación */}
+          <div className="menu">
+            <a href="/" className="select">Inicio</a>
+            <a href="/categoria" className="select">Categorías</a>
+            <a href="/nosotros" className="select">Nosotros</a>
+            
+          </div>
+     <a href="/cliente" className="client">Hazte Cliente</a>
+
+          <div className="buscador">
+          
+              <input type="search" placeholder="Buscar..." className="barrabuscar" />
+              
+              <MagnifyingGlassCircleIcon className="MagnifyingGlassCircleIcon"/>
+          
+            </div>
+
+            <button className="carrito">
+                <div className='hidden md:flex items-center'>
+                    <ShoppingBagIcon className="h-5 w-5 text-white"/>
+                    <span className="ml-2">Ver Carrito</span>
+                </div>
+                <div className="md:hidden">
+                    <ShoppingBagIcon className="h-5 w-5 text-white"/>
+                </div>
+            </button>
+         
+        </header>
+      );
 }
