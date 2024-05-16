@@ -60,4 +60,4 @@ export const Ofertas = () => {
     </div>
   );
 };
-
+export default Ofertas;
