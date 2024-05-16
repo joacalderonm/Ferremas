@@ -1,7 +1,27 @@
-import '../css/Styles.css'
+import { useState, useEffect } from "react";
+import { fetchCategoria } from "../api/api";
+import "../css/Styles.css";
 
-export const Categorias = () => {
-  // Supongamos que tienes un array de ofertas con la siguiente estructura:
+
+const Categorias = () => {
+  const [categorias, setCategorias] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const obtenerCategorias = async () => {
+      try {
+        const data = await fetchCategoria();
+        setCategorias(data);
+      } catch (error) {
+        console.error("Error al cargar las categorías:", error);
+        setError("No se pudieron cargar las categorías");
+      }
+    };
+
+    obtenerCategorias();
+  }, []);
+
+  /*
   const categorias = [
     {
       id: 1,
@@ -87,21 +107,28 @@ export const Categorias = () => {
       }
 
   ];
+*/
 
-  return (
- 
-  
-      <div className="cards-category">
-        {categorias.map(categoria => (
+return (
+  <div className="cards-category">
+    {error ? (
+      <p>{error}</p>
+    ) : (
+      <>
+        <h1>Categorías</h1>
+        {categorias.map((categoria) => (
           <div key={categoria.id} className="card">
-            <img src={categoria.imagen} alt={categoria.producto} />
+            <img src={categoria.imagen} alt={categoria.nombre} />
             <div className="info">
-              <h3>{categoria.producto}</h3>
+              <h3>{categoria.nombre}</h3>
             </div>
           </div>
         ))}
-      </div>
-  
-  );
+      </>
+    )}
+  </div>
+);
+
 };
+
 export default Categorias;
