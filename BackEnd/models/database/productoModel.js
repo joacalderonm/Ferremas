@@ -1,19 +1,8 @@
-import mysql from 'mysql2/promise'
-
-const config = {
-    host: 'localhost',
-    user: 'root',
-    port: 3306,
-    password: '',
-    database: 'ferremas'
-}
-
-const connection = await mysql.createConnection(config)
+import { createConnection } from "./config.js";
 
 export class ProductoModel {
     static async getAll ({ nombre }) {
-        
-
+        const connection = await createConnection();
         if (nombre) {
             console.log ('hola')
             const lowerCaseNombre = nombre.toLowerCase();
@@ -37,21 +26,23 @@ export class ProductoModel {
         return producto
     }
 
-    static async getById ({ id }){
-        const [producto] = await connection.query(
-            `SELECT * FROM producto
-            WHERE productoID = ?;`,
-            [id]
-        )
-
-        if (producto.length === 0) return null
-        
-        return producto[0]
+    static async getById({ id }) {
+        const connection = await createConnection();
+        try {
+            const [productos] = await connection.query(
+                "SELECT * FROM producto WHERE productoID = ?;",
+                [id]
+            );
+            // Verifica si hay productos y retorna el primer producto si existe, de lo contrario retorna null
+            return productos.length > 0 ? productos[0] : null;
+        } finally {
+            await connection.end();
+        }
     }
 
     static async create({ input }) {
         const { nombre, descripcion, precio, stock, categoriaID } = input
-    
+        const connection = await createConnection();
         try {
             await connection.query(
                 `INSERT INTO producto (nombre,descripcion,precio,stock,categoriaID) VALUES (?,?,?,?,?);`,
@@ -64,6 +55,7 @@ export class ProductoModel {
     }
 
     static async delete ({ id }){
+        const connection = await createConnection();
         const [producto] = await connection.query(
             'DELETE FROM producto  WHERE productoID = ?;',
             [id]
