@@ -24,4 +24,32 @@ export const fetchCategoria = async () => {
   }
 }
 
+export const fetchCategoriaByNombre = async (nombre) => {
+  try {
+    const response = await axios.get(`${categoryAPI}/${nombre}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener la categoría:', error);
+    throw error;
+  }
+}
 
+export const fetchCategoriaById = async (id) => { 
+  try {
+    const response = await axios.get(`${categoryAPI}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener la categoría:', error);
+    throw error;
+  }
+}
+
+export const fetchProductosPorCategoria = async (id) => {
+  try {
+    const response = await axios.get(`${productAPI}/categoria/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los productos por categoría:', error);
+    throw error;
+  }
+}

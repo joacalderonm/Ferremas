@@ -33,6 +33,23 @@ export class CategoriaController {
         }
     };
 
+    getByName = async (req, res) => {
+        const { nombre } = req.params;
+        try {
+            if (!nombre) {
+                return res.status(400).json({ message: "El nombre es necesario para la consulta" });
+            }
+            const categoria = await this.categoriaModel.getByName({ nombre });
+            if (categoria) {
+                res.json(categoria);
+            } else {
+                res.status(404).json({ message: "Categoría no encontrada" });
+            }
+        } catch (error) {
+            res.status(500).json({ message: "Error al buscar la categoría", error: error.message });
+        }
+    };
+
     create = async  (req, res) => {
         const result = validateCategoria(req.body)
 

@@ -19,6 +19,12 @@ export class ProductoController {
         res.status(404).json({message: 'No encontrado'})
     }
 
+    getByCategory = async (req, res) => {
+        const { categoriaID } = req.params
+        const productos = await this.productoModel.getByCategory({ categoriaID })
+        res.json(productos)
+    }
+
     create = async  (req, res) => {
         const result = validateProducto(req.body)
 

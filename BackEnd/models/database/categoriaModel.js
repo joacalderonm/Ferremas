@@ -27,6 +27,19 @@ export class CategoriaModel {
         }
     }
 
+    static async getByName ({ nombre }) {
+        const connection = await createConnection();
+        try {
+            const [categorias] = await connection.query(
+                'SELECT * FROM categoria WHERE nombre = ?;',
+                [nombre]
+            );
+            return categorias.length > 0 ? categorias[0] : null;
+        } finally {
+            await connection.end();
+        }
+    }
+
     static async create ({ input }) {
         const { nombre, descripcion } = input;
         const connection = await createConnection();

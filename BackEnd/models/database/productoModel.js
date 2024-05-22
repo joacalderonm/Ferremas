@@ -40,6 +40,19 @@ export class ProductoModel {
         }
     }
 
+    static async getByCategory({ categoriaID }) {
+        const connection = await createConnection();
+        try {
+            const [productos] = await connection.query(
+                "SELECT * FROM producto WHERE categoriaID = ?;",
+                [categoriaID]
+            );
+            return productos;
+        } finally {
+            await connection.end();
+        }
+    }
+
     static async create({ input }) {
         const { nombre, descripcion, precio, stock, categoriaID } = input
         const connection = await createConnection();
