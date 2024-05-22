@@ -46,7 +46,7 @@ const CategoriaDetalle = () => {
               <div className="p-4">
                 <h4 className="text-lg font-semibold">{producto.nombre}</h4>
                 <p className="text-gray-700 mt-2">{producto.descripcion}</p>
-                <p className="text-blue-600 font-bold mt-4">Precio: ${producto.precio}</p>
+                <p className="text-blue-600 font-bold mt-4">Precio: ${producto.precio_formateado}</p>
               </div>
             </div>
           ))

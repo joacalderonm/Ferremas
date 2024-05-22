@@ -28,7 +28,7 @@ const Categorias = () => {
   };
  
 return (
-  <div className="cards-category">
+  <div className="cards-category flex">
     {error ? (
       <p>{error}</p>
     ) : (

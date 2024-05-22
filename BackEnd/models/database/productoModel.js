@@ -4,7 +4,6 @@ export class ProductoModel {
     static async getAll ({ nombre }) {
         const connection = await createConnection();
         if (nombre) {
-            console.log ('hola')
             const lowerCaseNombre = nombre.toLowerCase();
 
             const [nombres] = await connection.query(
@@ -44,7 +43,7 @@ export class ProductoModel {
         const connection = await createConnection();
         try {
             const [productos] = await connection.query(
-                "SELECT * FROM producto WHERE categoriaID = ?;",
+                "SELECT *, FORMAT(precio, 0, 'de_DE') AS precio_formateado FROM producto WHERE categoriaID = ?;",
                 [categoriaID]
             );
             return productos;

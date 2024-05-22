@@ -114,7 +114,6 @@
   background-color: #0056b3;
 }
 
-
 .cards-category {
   display: flex;
   flex-wrap: wrap;
@@ -169,22 +168,22 @@
 
 .in-fo h1{
   font-size: 25px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .in-fo p{
   margin-top: 8px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .historia h1{
   margin-top: 8px;
   font-size: 25px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 .historia p{
   margin-top: 8px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 .contenido-nosotros {
   display: flex;
