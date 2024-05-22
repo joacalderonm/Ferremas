@@ -8,6 +8,7 @@ export const createProductoRouter = ({ productoModel }) => {
 
     productoRouter.get('/', productoController.getAll)
     productoRouter.get('/:id', productoController.getById )
+    productoRouter.get('/categoria/:categoriaID', productoController.getByCategory )
     productoRouter.post('/', productoController.create)
     productoRouter.delete('/:id', productoController.delete)
     productoRouter.patch('/:id', productoController.update )

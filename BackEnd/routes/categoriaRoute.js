@@ -8,6 +8,7 @@ export const createCategoriaRouter = ({ categoriaModel }) => {
 
     categoriaRouter.get('/', categoriaController.getAll)
     categoriaRouter.get('/:id', categoriaController.getById )
+    categoriaRouter.get('/:nombre', categoriaController.getByName )
     categoriaRouter.post('/', categoriaController.create)
     categoriaRouter.delete('/:id', categoriaController.delete)
     categoriaRouter.patch('/:id', categoriaController.update )

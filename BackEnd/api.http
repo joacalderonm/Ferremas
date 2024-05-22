@@ -1,6 +1,6 @@
 
 ### Recuperar todas las peliculas
-GET  http://localhost:1234/producto
+GET  http://localhost:1234/producto/categoria/1
 
 ### Recuperar todas las peliculas
 GET http://localhost:1234/producto?id=Hogar
@@ -34,7 +34,7 @@ Content-Type: application/json
 
 
 ###Recuperar todas las categorias por id
-GET http://localhost:1234/categoria/
+GET http://localhost:1234/categoria/2
 
 
 ### Post Categoria
