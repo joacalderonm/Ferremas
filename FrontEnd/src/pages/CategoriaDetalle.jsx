@@ -82,6 +82,7 @@ const CategoriaDetalle = () => {
           filtrarProductos={filtrarProductos}
           productos={productos}
         />
+
       </div>
     </div>
   );
