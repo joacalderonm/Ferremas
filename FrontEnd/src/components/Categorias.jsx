@@ -28,22 +28,23 @@ const Categorias = () => {
   };
  
 return (
-  <div className="cards-category flex">
-    {error ? (
-      <p>{error}</p>
-    ) : (
-      <>
-        {categorias.map((categoria) => (
-          <div key={categoria.categoriaID} className="card" onClick={() => handleClick (categoria.categoriaID)}>
-            <img src={categoria.imagen} alt={categoria.nombre} />
-            <div className="info">
-              <h3>{categoria.nombre}</h3>
-            </div>
+  <div className="cards-category flex flex-col space-y-0 md:flex-row md:space-y-0 md:space-x-0">
+  {error ? (
+    <p>{error}</p>
+  ) : (
+    <>
+      {categorias.map((categoria) => (
+        <div key={categoria.categoriaID} className="card" onClick={() => handleClick(categoria.categoriaID)}>
+          <img src={categoria.imagen} alt={categoria.nombre} />
+          <div className="info">
+            <h3>{categoria.nombre}</h3>
           </div>
-        ))}
-      </>
-    )}
-  </div>
+        </div>
+      ))}
+    </>
+  )}
+</div>
+
 );
 
 };
