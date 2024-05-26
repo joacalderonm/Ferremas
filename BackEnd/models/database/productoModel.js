@@ -44,7 +44,7 @@ export class ProductoModel {
         const connection = await createConnection();
         try {
             const [productos] = await connection.query(
-                "SELECT * FROM producto WHERE categoriaID = ?;",
+                "SELECT *, FORMAT(precio, 0, 'de_DE') AS precio_formateado FROM producto WHERE categoriaID = ?;",
                 [categoriaID]
             );
             return productos;

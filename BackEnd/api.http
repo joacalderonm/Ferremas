@@ -80,3 +80,7 @@ Content-Type: application/json
 {
     "descripcion": "SADASD"
 }
+
+
+###Recuperar todas las marcas
+GET http://localhost:1234/marca
