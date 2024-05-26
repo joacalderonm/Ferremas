@@ -58,7 +58,7 @@ export const Header = () => {
     
       <div className="flex md:hidden items-center justify-between w-full mt-4">
         <a href="/ofertas" className="client bg-transparent border border-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-500 hover:text-white">
-          Ofertas
+         Cliente
         </a>
     
         <button
