@@ -180,6 +180,13 @@
   color: rgb(0, 0, 0);
 }
 
+
+.buscador1 input{
+  border: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
 .historia h1{
   margin-top: 8px;
   font-size: 25px;
@@ -225,6 +232,13 @@
     display: flex;
     margin-left: 1rem;
   }
+
+  
+.buscador input{
+  border: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
   .buscador1{
     display: none;
   }

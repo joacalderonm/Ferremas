@@ -38,23 +38,23 @@ export const Header = () => {
       </div>
     
       <div className="hidden md:flex items-center justify-between w-full md:w-auto">
-        <a href="/cliente" className="client md:mr-4 mb-4 md:mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Hazte Cliente
-        </a>
-    
-        {/* Buscador en pantallas grandes */}
-        <div className="buscador1 hidden md:flex items-center mb-4 md:mb-0">
-          <input type="search" placeholder="Buscar..." className="barrabuscar p-2 rounded-l-md" />
-          <button className="bg-white p-2 rounded-r-md">
-            🔍
-          </button>
-        </div>
-    
-        <button className="carrito hidden md:flex items-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-          <ShoppingBagIcon className="h-5 w-5 text-white" />
-          <span className="ml-2">Ver Carrito</span>
-        </button>
-      </div>
+  <a href="/cliente" className="client md:mr-4 mb-4 md:mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Hazte Cliente
+  </a>
+
+  {/* Buscador en pantallas grandes */}
+  <div className="buscador1 hidden md:flex items-center mb-3 md:mb-0">
+    <input type="search" placeholder="Buscar..." className="barrabuscar p-1 rounded--md" />
+    <button className="butt bg-white p-2 rounded-r-md">
+      🔍
+    </button>
+  </div>
+
+  <button className="carrito hidden md:flex items-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4">
+    <ShoppingBagIcon className="h-5 w-5 text-white" />
+    <span className="ml-2">Ver Carrito</span>
+  </button>
+</div>
     
       <div className="flex md:hidden items-center justify-between w-full mt-4">
         <a href="/ofertas" className="client bg-transparent border border-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-500 hover:text-white">
@@ -68,7 +68,7 @@ export const Header = () => {
           {isMenuOpen ? 'X' : '☰'}
         </button>
     
-        <button className="carrito flex items-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        <button className="carrito flex items-center bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-4 rounded">
           <ShoppingBagIcon className="h-5 w-5 text-white" />
           <span className="ml-2">Ver Carrito</span>
         </button>
