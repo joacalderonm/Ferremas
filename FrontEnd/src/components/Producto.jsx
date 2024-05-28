@@ -9,7 +9,9 @@ const Producto = ({categoria, filtrarProductos, productos}) => {
       {filtrarProductos(productos).length > 0 ? (
         filtrarProductos(productos).map((producto) => (
           <div key={producto.productoID} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <img className="w-full h-48 object-cover" src={producto.imagen} alt={producto.nombre} />
+            <div className="w-full h-48 flex items-center justify-center">
+              <img className="max-w-full max-h-full object-contain" src={producto.imagen} alt={producto.nombre} />
+            </div>
             <div className="p-4">
               <h4 className="text-lg font-semibold">{producto.nombre}</h4>
               <p className="text-gray-700 mt-2">{producto.descripcion}</p>
@@ -27,6 +29,7 @@ const Producto = ({categoria, filtrarProductos, productos}) => {
       )}
     </div>
   </div>
+  
   
   
   );
