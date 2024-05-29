@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchCategoria } from "../api/api";
+import { fetchCategoria } from "../api/apiCategoria.js";
 import { useNavigate } from "react-router-dom";
 import "../css/Styles.css";
 

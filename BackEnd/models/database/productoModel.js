@@ -43,7 +43,47 @@ export class ProductoModel {
         const connection = await createConnection();
         try {
             const [productos] = await connection.query(
-                "SELECT *, FORMAT(precio, 0, 'de_DE') AS precio_formateado FROM producto WHERE categoriaID = ?;",
+                "SELECT *, FORMAT(precio, 'de_DE') AS precio_formateado FROM producto WHERE categoriaID = ?;",
+                [categoriaID]
+            );
+            return productos;
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async getByMarcasForCategoria ({ categoriaID}) {
+        const connection = await createConnection();
+        try {
+            const [productos] = await connection.query(
+                'SELECT DISTINCT p.marcaID, m.nombre FROM producto p inner join marca m on p.marcaID = m.marcaID WHERE categoriaID = ?;',
+                [categoriaID]
+            );
+            return productos;
+        } finally {
+            await connection.end();
+        }
+    }
+
+
+    static async getByMaterialForCategoria ({ categoriaID }) {
+        const connection = await createConnection();
+        try {
+            const [productos] = await connection.query(
+                'SELECT DISTINCT p.materialID, m.nombre FROM producto p inner join material m on p.materialID = m.materialID WHERE categoriaID = ?;',
+                [categoriaID]
+            );
+            return productos;
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async getByMaxPrice ({ categoriaID }) {
+        const connection = await createConnection();
+        try {
+            const [productos] = await connection.query(
+                'SELECT MAX(precio) AS precio_max FROM producto WHERE categoriaID = ?;',
                 [categoriaID]
             );
             return productos;

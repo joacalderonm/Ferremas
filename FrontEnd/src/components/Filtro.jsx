@@ -1,9 +1,20 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltro, setMaterialFiltro }) => {
+const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltro, setMaterialFiltro, setPrecioMin}) => {
+  const [localPrecioMin, setLocalPrecioMin] = useState("0");
+
+
+  const handleMinChange = (e) => {
+    const value = parseInt(e.target.value);
+    setLocalPrecioMin(value);
+    setPrecioMin(value);
+  };
+
   return (
-    <div>
+    <div className="space-y-4">
       <h3 className="text-xl font-semibold mb-4">Filtrar por</h3>
+      
       <div className="mb-4">
         <label className="block mb-2">
           Marca:
@@ -20,6 +31,7 @@ const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltr
             ))}
           </select>
         </label>
+        
         <label className="block mb-2">
           Material:
           <select
@@ -35,6 +47,22 @@ const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltr
             ))}
           </select>
         </label>
+        
+        <div className="mt-4">
+          <label htmlFor="minmax-range" className="block mb-2 ">Rango de Precio:</label>
+          <input
+            id="minmax-range"
+            type="range"
+            min="0"
+            max="500000"
+            value={localPrecioMin}
+            onChange={handleMinChange}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+          />
+          <div className="flex justify-between mt-2 text-sm text-gray-600">
+            <span>${localPrecioMin}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -57,6 +85,8 @@ Filtro.propTypes = {
   materialFiltro: PropTypes.string.isRequired,
   setMarcaFiltro: PropTypes.func.isRequired,
   setMaterialFiltro: PropTypes.func.isRequired,
+  precioMin: PropTypes.number.isRequired,
+  setPrecioMin: PropTypes.func.isRequired,
 };
 
 export default Filtro;
