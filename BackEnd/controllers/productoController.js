@@ -25,6 +25,24 @@ export class ProductoController {
         res.json(productos)
     }
 
+    getByMarcasForCategoria = async (req, res) => {
+        const { categoriaID } = req.params
+        const productos = await this.productoModel.getByMarcasForCategoria({ categoriaID })
+        res.json(productos)
+    }
+
+    getByMaterialForCategoria = async (req, res) => {
+        const { categoriaID } = req.params
+        const productos = await this.productoModel.getByMaterialForCategoria({ categoriaID })
+        res.json(productos)
+    }
+
+    getByMaxPrice = async (req, res) => {
+        const { precio } = req.params
+        const productos = await this.productoModel.getByMaxPrice({ precio })
+        res.json(productos)
+    }
+
     create = async  (req, res) => {
         const result = validateProducto(req.body)
 

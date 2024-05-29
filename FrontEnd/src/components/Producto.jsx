@@ -47,6 +47,7 @@ Producto.propTypes = {
       descripcion: propTypes.string.isRequired,
       imagen: propTypes.string.isRequired,
       precio: propTypes.number.isRequired,
+      precio_formateado: propTypes.string.isRequired,
     })
   ).isRequired,
 };
