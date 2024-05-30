@@ -19,7 +19,6 @@ const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltr
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold mb-4">Filtrar por</h3>
-      
       <div className="mb-4">
         <label className="block mb-2">
           Marca:
@@ -36,7 +35,6 @@ const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltr
             ))}
           </select>
         </label>
-        
         <label className="block mb-2">
           Material:
           <select
@@ -51,8 +49,7 @@ const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltr
               </option>
             ))}
           </select>
-        </label>
-        
+        </label>        
         <div className="mt-4">
           <label htmlFor="minmax-range" className="block mb-2 ">Rango de Precio:</label>
           <input

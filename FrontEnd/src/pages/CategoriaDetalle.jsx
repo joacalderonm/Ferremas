@@ -35,7 +35,6 @@ const CategoriaDetalle = () => {
         }));
         
         setProductos(productosMayus);
-
         const marcasData = await fetchMarcasForCategoria(categoriaData.categoriaID);
         setMarcas(marcasData);
 
@@ -46,7 +45,6 @@ const CategoriaDetalle = () => {
         const maxPrice = parseFloat(precioMaxData);
         setMaxPrecio(maxPrice);
         setPrecioMax(maxPrice);
-
       } catch (error) {
         console.error('Error al cargar los detalles de la categoría y los productos:', error);
         setError('No se pudieron cargar los detalles de la categoría y los productos');
@@ -75,7 +73,6 @@ const CategoriaDetalle = () => {
   }
 
   const productosFiltrados = filtrarProductos(productos);
-
   return (
     <div className="container mx-auto p-4 md:flex md:space-x-4">
       <div className="md:w-1/4 p-4 border-r md:border-r-0 md:border-b md:mb-4">

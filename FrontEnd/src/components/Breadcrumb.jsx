@@ -13,6 +13,7 @@ const Breadcrumb = ({ categoria }) => {
           <Link to="/categoria" className="text-gray-600 hover:underline">Categorías</Link>
         </li>
         <li><span className='mx-2'>/</span></li>
+
         <li className="font-bold text-gray-900">{categoria}</li>
       </ol>
     </nav>

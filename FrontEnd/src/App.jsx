@@ -4,19 +4,22 @@ import Index from './pages/Index';
 import Categoria from './pages/Categoria';
 import Contacto from './pages/Contacto';
 import CategoriaDetalle from './pages/CategoriaDetalle';
-
+import CartPage from './pages/CartPage';
+import { CartProvider } from './CartContext';
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/categoria" element={<Categoria />} />
-        <Route path="/nosotros" element={ <Contacto /> } />
-        <Route path="/categoria/:id" element={<CategoriaDetalle />} />
-        {/* Más rutas según sea necesario */}
-      </Routes>
-    </Layout>
+    <CartProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/categoria" element={<Categoria />} />
+          <Route path="/nosotros" element={<Contacto />} />
+          <Route path="/categoria/:id" element={<CategoriaDetalle />} />
+          <Route path="/carrito" element={<CartPage />} />
+        </Routes>
+      </Layout>
+    </CartProvider>
   );
 }
 
