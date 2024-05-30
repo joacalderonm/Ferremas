@@ -5,7 +5,7 @@ import Categoria from './pages/Categoria';
 import Contacto from './pages/Contacto';
 import CategoriaDetalle from './pages/CategoriaDetalle';
 import CartPage from './pages/CartPage';
-import { CartProvider } from './CartContext';
+import { CartProvider } from './components/CartContext';
 
 function App() {
   return (
