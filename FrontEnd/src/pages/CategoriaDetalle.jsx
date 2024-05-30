@@ -36,6 +36,7 @@ const CategoriaDetalle = () => {
         
         setProductos(productosMayus);
         const marcasData = await fetchMarcasForCategoria(categoriaData.categoriaID);
+        console.log(marcasData)
         setMarcas(marcasData);
 
         const materialesData = await fetchMaterialForCategoria(categoriaData.categoriaID);
