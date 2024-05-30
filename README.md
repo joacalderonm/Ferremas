@@ -1,13 +1,8 @@
 # Ferremas
 
-Para configurar el entorno de FrontEnd.
-
-    - Ingresar a la terminal y a la carpeta FrontEnd.
-    - Ingresar el comando "npm install" (se descargaran todas las dependencias del archivo).
-        - Dependencias agregadas.
-            tailwind
-            autoprefixer
-            postcss
-            @heroicons/react     
-            prop-types      
-    - iniciarlizar proyecto npm run dev
+Para configurar el entorno ingresar en la consola, de la carpeta raíz
+    - npm run install:all
+    - npm run start
+O podrían iniciar el proyecto con estos comandos
+    - npm run start:frontend
+    - npm run start:backend

@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "start:frontend": "cd FrontEnd && npm run dev",
+    "start:backend": "cd BackEnd && npm run start:mysql",
+    "start": "npm run start:frontend && npm run start:backend",
+    "install:frontend": "cd FrontEnd && npm install",
+    "install:backend": "cd BackEnd && npm install",
+    "install:all": "npm run install:frontend && npm run install:backend"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+  
+}

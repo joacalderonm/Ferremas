@@ -1,0 +1,86 @@
+
+### Recuperar todas las peliculas
+GET  http://localhost:1234/producto/categoria/1
+
+### Recuperar todas las peliculas
+GET http://localhost:1234/producto?id=Hogar
+
+###Recuperar toda la pelicula por id
+GET http://localhost:1234/producto/3
+
+###Crear una categoria
+POST http://localhost:1234/producto
+Content-Type: application/json
+
+{
+    "nombre": "dasdas",
+    "descripcion": " ",
+    "precio": 100,
+    "stock": 10,
+    "categoriaID": 1
+}
+
+### Borrar una ferreteria
+DELETE http://localhost:1234/producto/8
+
+###Actualizar Categoria
+PATCH http://localhost:1234/categoria/3
+Content-Type: application/json
+
+{
+    "descripcion": "dasd",
+    "precio": 100
+}
+
+
+###Recuperar todas las categorias por id
+GET http://localhost:1234/categoria/2
+
+
+### Post Categoria
+POST http://localhost:1234/categoria
+Content-Type: application/json
+
+{
+    "nombre": "ferremas",
+    "descripcion": ""
+}
+
+### Borrar una categoria
+DELETE http://localhost:1234/categoria/4
+
+###Actualizar Categoria
+PATCH http://localhost:1234/categoria/2
+Content-Type: application/json
+
+{
+    "nombre": "Hogar",
+    "descripcion": ""
+}
+
+###Crear una categoria
+POST http://localhost:1234/producto
+Content-Type: application/json
+
+{
+    "nombre": "dasdas",
+    "descripcion": " ",
+    "precio": 100,
+    "stock": 10,
+    "categoriaID": 1
+}
+
+### Borrar una ferreteria
+DELETE http://localhost:1234/producto/8
+
+###Actualizar Categoria
+PATCH http://localhost:1234/producto/3
+Content-Type: application/json
+
+{
+    "descripcion": "SADASD"
+}
+
+
+###Recuperar todas las marcas
+GET http://localhost:1234/marca

@@ -1,9 +1,16 @@
-import { Layout } from "../layout/Layout"
+import Slider from '../components/Slider';
+import Ofertas from '../components/Ofertas';
+import '../../node_modules/tailwindcss/lib/css/preflight.css'
+//import Ofertas from '../components/Ofertas';
 
-export function Index(){
-    return (
-        <Layout>
-            {/*Contenido */}
-        </Layout>
-    )
+function Index() {
+  return (
+    <div>
+      <Slider />
+        <Ofertas />
+
+    </div>
+  );
 }
+
+export default Index;
