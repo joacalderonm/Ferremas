@@ -45,7 +45,7 @@ export const fetchMaterialForCategoria = async (id) => {
 export const fetchProductoByMaxPrice = async (id) => {
   try {
     const response = await axios.get(`${productAPI}/precio/${id}`);
-    return response.data;
+    return response.data.precio;
   } catch (error) {
     console.error('Error al obtener los productos por precio máximo:', error);
     throw error;

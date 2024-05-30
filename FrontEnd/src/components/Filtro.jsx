@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltro, setMaterialFiltro, setPrecioMin}) => {
-  const [localPrecioMin, setLocalPrecioMin] = useState("0");
+const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltro, setMaterialFiltro, precioMin, setPrecioMin, setPrecioMax, maxPrecio }) => {
+  const [localPrecioMin, setLocalPrecioMin] = useState(precioMin);
+  const [localPrecioMax, setLocalPrecioMax] = useState(maxPrecio);
 
+  useEffect(() => {
+    setLocalPrecioMax(maxPrecio);
+    setPrecioMax(maxPrecio);
+  }, [maxPrecio, setPrecioMax]);
 
   const handleMinChange = (e) => {
     const value = parseInt(e.target.value);
@@ -54,13 +59,14 @@ const Filtro = ({ marcas, materiales, marcaFiltro, materialFiltro, setMarcaFiltr
             id="minmax-range"
             type="range"
             min="0"
-            max="500000"
+            max={localPrecioMax}
             value={localPrecioMin}
             onChange={handleMinChange}
             className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
           />
           <div className="flex justify-between mt-2 text-sm text-gray-600">
             <span>${localPrecioMin}</span>
+            <span>${localPrecioMax}</span>
           </div>
         </div>
       </div>
@@ -87,6 +93,9 @@ Filtro.propTypes = {
   setMaterialFiltro: PropTypes.func.isRequired,
   precioMin: PropTypes.number.isRequired,
   setPrecioMin: PropTypes.func.isRequired,
+  precioMax: PropTypes.number.isRequired,
+  setPrecioMax: PropTypes.func.isRequired,
+  maxPrecio: PropTypes.number.isRequired,
 };
 
 export default Filtro;
