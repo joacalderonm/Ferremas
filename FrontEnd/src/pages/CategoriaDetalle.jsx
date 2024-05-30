@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCategoriaById } from '../api/apiCategoria.js'; 
-import { fetchProductosPorCategoria, fetchMarcasForCategoria, fetchMaterialForCategoria } from '../api/apiProducto.js';
+import { fetchProductosPorCategoria, fetchMarcasForCategoria, fetchMaterialForCategoria, fetchProductoByMaxPrice } from '../api/apiProducto.js';
 import Filtro from '../components/Filtro.jsx';
 import '../css/CategoriaDetalle.css';
 import Producto from '../components/Producto.jsx';
@@ -16,6 +16,8 @@ const CategoriaDetalle = () => {
   const [marcaFiltro, setMarcaFiltro] = useState('');
   const [materialFiltro, setMaterialFiltro] = useState('');
   const [precioMin, setPrecioMin] = useState(0);
+  const [precioMax, setPrecioMax] = useState(0);
+  const [maxPrecio, setMaxPrecio] = useState(0); // Valor máximo dinámico
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const CategoriaDetalle = () => {
           ...producto,
           nombre: producto.nombre.toUpperCase(),
           precio: parseFloat(producto.precio),
-          precio_formateado: producto.precio_formateado ? producto.precio_formateado : null
+          precio_formateado: parseFloat(producto.precio).toLocaleString('de-DE', { style: 'currency', currency: 'CLP'}),
         }));
         
         setProductos(productosMayus);
@@ -39,6 +41,12 @@ const CategoriaDetalle = () => {
 
         const materialesData = await fetchMaterialForCategoria(categoriaData.categoriaID);
         setMateriales(materialesData);
+
+        const precioMaxData = await fetchProductoByMaxPrice(categoriaData.categoriaID);
+        const maxPrice = parseFloat(precioMaxData);
+        setMaxPrecio(maxPrice);
+        setPrecioMax(maxPrice);
+
       } catch (error) {
         console.error('Error al cargar los detalles de la categoría y los productos:', error);
         setError('No se pudieron cargar los detalles de la categoría y los productos');
@@ -53,7 +61,8 @@ const CategoriaDetalle = () => {
       const cumpleMarca = marcaFiltro === '' || producto.marcaID === parseInt(marcaFiltro);
       const cumpleMaterial = materialFiltro === '' || producto.materialID === parseInt(materialFiltro);
       const cumplePrecioMin = precioMin === '' || producto.precio >= parseFloat(precioMin);
-      return cumpleMarca && cumpleMaterial && cumplePrecioMin;
+      const cumplePrecioMax = precioMax === '' || producto.precio <= parseFloat(precioMax);
+      return cumpleMarca && cumpleMaterial && cumplePrecioMin && cumplePrecioMax;
     });
   };
 
@@ -80,6 +89,9 @@ const CategoriaDetalle = () => {
           setMaterialFiltro={setMaterialFiltro}
           precioMin={precioMin}
           setPrecioMin={setPrecioMin}
+          precioMax={precioMax}
+          setPrecioMax={setPrecioMax}
+          maxPrecio={maxPrecio}
         />
       </div>
       <div className="md:w-3/4">

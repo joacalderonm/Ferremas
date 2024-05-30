@@ -38,9 +38,9 @@ export class ProductoController {
     }
 
     getByMaxPrice = async (req, res) => {
-        const { precio } = req.params
-        const productos = await this.productoModel.getByMaxPrice({ precio })
-        res.json(productos)
+        const { categoriaID } = req.params
+        const productos = await this.productoModel.getByMaxPrice({ categoriaID })
+        res.json(productos[0])
     }
 
     create = async  (req, res) => {

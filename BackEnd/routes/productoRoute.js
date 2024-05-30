@@ -11,7 +11,7 @@ export const createProductoRouter = ({ productoModel }) => {
     productoRouter.get('/categoria/:categoriaID', productoController.getByCategory )
     productoRouter.get('/marcas/:categoriaID', productoController.getByMarcasForCategoria )
     productoRouter.get('/material/:categoriaID', productoController.getByMaterialForCategoria )
-    productoRouter.get('/precio/:precio', productoController.getByMaxPrice )
+    productoRouter.get('/precio/:categoriaID', productoController.getByMaxPrice )
     productoRouter.post('/', productoController.create)
     productoRouter.delete('/:id', productoController.delete)
     productoRouter.patch('/:id', productoController.update )

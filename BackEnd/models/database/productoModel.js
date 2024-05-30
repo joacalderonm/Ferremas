@@ -83,7 +83,7 @@ export class ProductoModel {
         const connection = await createConnection();
         try {
             const [productos] = await connection.query(
-                'SELECT MAX(precio) AS precio_max FROM producto WHERE categoriaID = ?;',
+                'SELECT MAX(precio) AS precio FROM producto WHERE categoriaID = ?;',
                 [categoriaID]
             );
             return productos;
