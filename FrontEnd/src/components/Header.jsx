@@ -38,7 +38,7 @@ export const Header = () => {
       </div>
     
       <div className="hidden md:flex items-center justify-between w-full md:w-auto">
-  <a href="/cliente" className="client md:mr-4 mb-4 md:mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  <a href="/prueba" className="client md:mr-4 mb-4 md:mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
     Hazte Cliente
   </a>
 
