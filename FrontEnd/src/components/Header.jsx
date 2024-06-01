@@ -43,7 +43,6 @@ export const Header = () => {
             <span className="ml-2">Ver Carrito</span>
           </Link>
         </button>
-      </div>
     
       <div className="flex md:hidden items-center justify-between w-full mt-4">
         <Link to="/ofertas" className="client bg-transparent border border-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-500 hover:text-white">Cliente</Link>

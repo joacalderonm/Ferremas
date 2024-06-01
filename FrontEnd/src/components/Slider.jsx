@@ -1,4 +1,3 @@
-import React from 'react';
 import '../css/Styles.css'
 import logo from '../assets/MockupsFerremas.png';
 const HeaderImage = () => {
