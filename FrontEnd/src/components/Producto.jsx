@@ -1,6 +1,15 @@
 import propTypes from 'prop-types';
-
+import { useCart } from './CartContext';
+  
 const Producto = ({categoria, filtrarProductos, productos}) => {
+
+    const { dispatch } = useCart();
+  
+    const handleAddToCart = (producto) => {
+      dispatch({ type: 'ADD_TO_CART', product: producto });
+    };
+
+
   return (
     <div>
     <h2 className="text-2xl font-bold text-center mb-10">{categoria.nombre}</h2>
@@ -16,9 +25,12 @@ const Producto = ({categoria, filtrarProductos, productos}) => {
               <h4 className="text-lg font-semibold">{producto.nombre}</h4>
               <p className="text-gray-700 mt-2">{producto.descripcion}</p>
               <p className="text-blue-600 font-bold mt-4">Precio: ${producto.precio_formateado}</p>
-              <button className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-                Añadir al Carrito
-              </button>
+              <button
+                  className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                  onClick={() => handleAddToCart(producto)}  // Utilizar productoID en lugar de id
+                >
+                  Añadir al Carrito
+                </button>
             </div>
           </div>
         ))
@@ -29,9 +41,6 @@ const Producto = ({categoria, filtrarProductos, productos}) => {
       )}
     </div>
   </div>
-  
-  
-  
   );
 };
 
@@ -51,6 +60,5 @@ Producto.propTypes = {
     })
   ).isRequired,
 };
-
 
 export default Producto;
