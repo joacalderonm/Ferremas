@@ -38,19 +38,18 @@ export const Header = () => {
         <button className="butt bg-white p-2 rounded-r-md">🔍</button>
       </div>
 
-      <div className="relative">
-        <button className="carrito flex items-center bg-red-500 hover:bg-green-700 text-white font-bold py-4 px-4 rounded">
-          <Link to="/carrito" className="flex items-center">
-            <ShoppingBagIcon className="h-5 w-5 text-white" />
-            <span className="ml-2">Ver Carrito</span>
-            {cart.length > 0 && (
-              <span className="ml-2 bg-white text-red-500 rounded-full w-6 h-6 flex items-center justify-center">
-                {cart.length}
-              </span>
-            )}
-          </Link>
-        </button>
-      </div>
+      <div className="carrito flex items-center bg-red-500 hover:bg-green-700 text-white font-bold py-4 px-4 rounded md:hidden md:justify-start">
+  <Link to="/carrito" className="flex items-center">
+    <ShoppingBagIcon className="h-5 w-5 text-white" />
+    <span className="ml-2">Ver Carrito</span>
+    {cart.length > 0 && (
+      <span className="ml-2 bg-white text-red-500 rounded-full w-6 h-6 flex items-center justify-center">
+        {cart.length}
+      </span>
+    )}
+  </Link>
+</div>
+
     
       <div className="flex md:hidden items-center justify-between w-full mt-4">
         <Link to="/ofertas" className="client bg-transparent border border-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-500 hover:text-white">Cliente</Link>
