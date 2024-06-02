@@ -1,5 +1,4 @@
-import { createConnection } from "./config.js";
-
+import { createConnection } from '../config.js';
 export class MarcaModel {
 
     static async getAll() {

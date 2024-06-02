@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useCart } from '../components/CartContext';
+import { fetchCarrito } from '../api/apiWebpayPlus';
 
 const CartPage = () => {
   const { cart, dispatch } = useCart();
@@ -30,9 +31,25 @@ const CartPage = () => {
     return subtotal + envio;
   };
 
-  const handleConfirmPurchase = () => {
+  const handleConfirmPurchase = async () => {
     // Aquí se puede implementar la lógica para confirmar la compra, como enviar la información del carrito al servidor, etc.
-    setConfirmPurchase(true);
+    const carritoData = {
+      clienteID: 1, // Debes obtener el clienteID del contexto o de algún estado
+      productos: cart.map(item => ({
+        productoID: item.productoID,
+        cantidad: item.quantity,
+        precio: item.precio
+      }))
+    };
+
+    try {
+      const response = await fetchCarrito(carritoData);
+      console.log('Compra confirmada:', response);
+      setConfirmPurchase(true);
+    } catch (error) {
+      console.error('Error al confirmar la compra:', error);
+      // Manejar el error, mostrar un mensaje al usuario, etc.
+    }
   };
 
   return (

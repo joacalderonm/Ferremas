@@ -91,3 +91,51 @@ GET http://localhost:1234/marca
 ### Get ByPrecio
 
 GET http://localhost:1234/producto/precio/1
+
+
+### Venta
+
+POST http://localhost:1234/webpay/createVenta
+Content-Type: application/json
+
+{
+  "venta": {
+    "fecha": "2024-06-01 00:00:00",
+    "clienteID": 1,
+    "estado": "CREATED"
+  },
+  "detallesVenta": [
+    {
+      "productoID": 1,
+      "cantidad": 2,
+      "precio": 1000
+    },
+    {
+      "productoID": 2,
+      "cantidad": 1,
+      "precio": 500
+    }
+  ],
+  "amount": 2500
+}
+
+### Venta
+
+POST http://localhost:1234/webpay/comprar
+Content-Type: application/json
+
+{
+  "clienteID": 1,
+  "productos": [
+    {
+      "productoID": 1,
+      "cantidad": 2,
+      "precio": 100
+    },
+    {
+      "productoID": 2,
+      "cantidad": 1,
+      "precio": 200
+    }
+  ]
+}

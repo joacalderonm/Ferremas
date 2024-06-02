@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
-import logo from '../assets/Logo.png';
+import logo from '../../assets/Logo.png';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +30,7 @@ export const Header = () => {
         <Link to="/nosotros" className="select py-2 px-4 text-center text-white md:text-left md:py-0">Nosotros</Link>
       </div>
     
-      <div className="hidden md:flex items-center justify-between w-full md:w-auto">
+      <div className="hidden md:flex items-center justify-between w-full md:w-auto" />
         <Link to="/cliente" className="client md:mr-4 mb-4 md:mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Hazte Cliente</Link>
         <div className="buscador1 hidden md:flex items-center mb-3 md:mb-0">
           <input type="search" placeholder="Buscar..." className="barrabuscar p-1 rounded--md" />

@@ -1,8 +1,52 @@
 import pkg from "transbank-sdk";
 const { WebpayPlus } = pkg;
 import asyncHandler from "../utils/async_handler.js";
+import { validateVenta, validateDetalleVenta  } from "../schemas/webpaySchema.js";
+
 
 export class WebpayController {
+
+  constructor({ webpayModel }) {
+    this.webpayModel = webpayModel;
+  }
+
+  createVenta = async (req, res) => {
+    const { clienteID, productos } = req.body;
+
+    const ventaResult = validateVenta({ clienteID });
+    if (!ventaResult.success) {
+        return res.status(400).json({ error: ventaResult.error });
+    }
+    
+    try {
+        const ventaID = await this.webpayModel.createVenta({ clienteID });
+
+        for (let producto of productos) {
+          const detalleResult = validateDetalleVenta({
+            ventaID,
+            productoID: producto.productoID,
+            cantidad: producto.cantidad,
+            precio: producto.precio
+        });
+          if (!detalleResult.success) {
+              return res.status(400).json({ error: detalleResult.error });
+          }
+            await this.webpayModel.createDetalleVenta({
+                ventaID,
+                productoID: producto.productoID,
+                cantidad: producto.cantidad,
+                precio: producto.precio
+            });
+        }
+
+        res.status(201).json({ message: 'Venta creada con éxito', ventaID });
+    } catch (error) {
+        console.error('Error en la creación de la venta: ', error);
+        res.status(500).json({ message: 'Error en la creación de la venta' });
+    }
+  }
+
+
   create = asyncHandler(async (req, res, next) => {
     let buyOrder = "O-" + Math.floor(Math.random() * 100000);
     let sessionId = "S-" + Math.floor(Math.random() * 100000);
