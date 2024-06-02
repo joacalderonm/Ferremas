@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCart } from '../CartContext';
+import { useCart } from '../components/CartContext';
 
 const CartPage = () => {
   const { cart, dispatch } = useCart();
@@ -56,15 +56,17 @@ const CartPage = () => {
         <div className="max-w-lg mx-auto">
           {cart.map((item) => (
             <div key={item.productoID} className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
-              <div className="flex items-center p-4 border-b">
-                <img src={item.imagen} alt={item.nombre} className="w-full sm:w-24 h-24 flex-shrink-0" />
-                <div className="ml-0 sm:ml-4 flex-grow mt-4 sm:mt-0 text-center sm:text-left min-w-0">
+              <div className="flex flex-col sm:flex-row items-center p-4 border-b">
+                <div className="w-full sm:w-24 h-24 flex-shrink-0">
+                  <img src={item.imagen} alt={item.nombre} className="object-contain w-full h-full" />
+                </div>
+                <div className="mt-4 sm:mt-0 sm:ml-4 text-center sm:text-left min-w-0 flex-grow">
                   <h4 className="text-lg font-semibold truncate">{item.nombre}</h4>
                   <p className="text-gray-700 truncate">{item.descripcion}</p>
                   <p className="text-blue-600 font-bold">Precio: ${item.precio}</p>
                   <p className="text-blue-600 font-bold">Total: ${calculateTotalPerProduct(item.precio, item.quantity)}</p>
                 </div>
-                <div className="ml-0 sm:ml-4 mt-4 sm:mt-0 flex items-center justify-end space-x-4 w-full sm:w-auto">
+                <div className="mt-4 sm:mt-0 sm:ml-4 flex items-center justify-center sm:justify-end space-x-4 w-full sm:w-auto">
                   <input
                     type="number"
                     min="1"
