@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { fetchCommitPost } from '../api/apiWebpayPlus';
 import { fetchVentaDetalleGetByID } from '../api/apiVentaDetalle';
+import { useCart } from '../components/CartContext';
 
 const Commit = () => {
+  const { dispatch } = useCart();
   const [commitData, setCommitData] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState('');
@@ -41,6 +43,10 @@ const Commit = () => {
       setCommitData(commitData);
       setError(null);
       setStatus('Transacción confirmada con éxito');
+      
+      // Limpiar el carrito después de confirmar la transacción
+      dispatch({ type: 'CLEAR_CART' });
+      
     } catch (error) {
       console.error('Error al confirmar la transacción:', error);
       setError('Error al confirmar la transacción: ' + error.message);
