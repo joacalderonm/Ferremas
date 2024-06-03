@@ -2,25 +2,38 @@ import axios from 'axios';
 
 const webpayPlusAPI = 'http://localhost:1234/webpay';
 
-export const fetchCarrito = async ( data ) => {
+export const fetchCarrito = async (data) => {
   try {
-    const response = await axios.post(`${webpayPlusAPI}/comprar`, data);
-    return response.data;
+      const response = await axios.post(`${webpayPlusAPI}/pagoFinal`, data);
+      return response.data;
   } catch (error) {
-    console.error('Error al obtener el carrito:', error);
-    throw error;
-  }
-}
-
-export const fetchCreate = async () => {
-  try {
-    const response = await axios.get(`${webpayPlusAPI}/create`);
-    return response.data;
-  } catch (error) {
-    console.error('Error al crear la transacción:', error);
-    throw error;
+      console.error('Error al obtener el carrito:', error);
+      throw error;
   }
 };
+
+export const fetchCreate = async (data) => {
+  try {
+      const response = await axios.get(`${webpayPlusAPI}/create`, {
+          params: data // Usar params para enviar los parámetros correctamente
+      });
+      return response.data;
+  } catch (error) {
+      console.error('Error al crear la transacción:', error);
+      throw error;
+  }
+};
+
+export const fetchToken = async (buyOrder) => {
+  try {
+      const response = await axios.get(`${webpayPlusAPI}/token/${buyOrder}`);
+      return response.data;
+  } catch (error) {
+      console.error('Error al obtener el token:', error);
+      throw error;
+  }
+};
+
 
 export const fetchCommit = async (data) => {
   try {

@@ -9,8 +9,10 @@
         "metodo",
         "Sesion",
         "SESION",
+        "transaccion",
         "transbank",
         "Transbank",
+        "uuidv",
         "webpay"
     ]
 }

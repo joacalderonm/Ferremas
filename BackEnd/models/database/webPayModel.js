@@ -1,6 +1,7 @@
 import { createConnection } from '../config.js';
 
 export class webPayModel {
+    
     static async createVenta(venta) {
         const { fecha = new Date(), clienteID = 1, estado = 'PENDIENTE' } = venta;
         const connection = await createConnection();
@@ -44,4 +45,94 @@ export class webPayModel {
             await connection.end();
         }
     }
+
+    static async createPago(input) {
+        const { ventaID, buyOrder, sessionId, fecha, amount, metodoPagoID, estadoPago, token } = input;
+        const connection = await createConnection();
+
+        try {
+            await connection.query(
+                'INSERT INTO pago (VentaID, buyOrder, sessionId, fecha, amount, metodoPagoID, estadoPago, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [ventaID, buyOrder, sessionId, fecha, amount, metodoPagoID, estadoPago, token]
+            );
+        } catch (error) {
+            console.error('Error al crear pago en la base de datos:', error.message);
+            throw new Error('Error al crear pago en la base de datos: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async updateEstadoVenta (input) {
+        const { estado, ventaID } = input;
+        const connection = await createConnection();
+
+        try {
+            await connection.query(
+                'UPDATE venta SET estado = ? WHERE ventaID = ?',
+                [estado, ventaID]
+            );
+        } catch (error) {
+            console.error('Error al actualizar el estado de la venta:', error.message);
+            throw new Error('Error al actualizar el estado de la venta: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async updatePagoToken (input) {
+        const { token, buyOrder } = input;
+        const connection = await createConnection();
+
+        try {
+            await connection.query(
+                'UPDATE pago SET token = ? WHERE buyOrder = ?',
+                [token, buyOrder]
+            );
+        } catch (error) {
+            console.error('Error al actualizar el token del pago:', error.message);
+            throw new Error('Error al actualizar el token del pago: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async getToken (input) {
+        const { buyOrder } = input;
+        const connection = await createConnection();
+
+        try {
+            const [rows] = await connection.query(
+                'SELECT token FROM pago WHERE buyOrder = ?',
+                [buyOrder]
+            );
+            if (rows.length > 0) {
+                return rows[0].token;
+            } else {
+                throw new Error('Token no encontrado para la orden de compra proporcionada.');
+            }
+        } catch (error) {
+            console.error('Error al obtener el token del pago:', error.message);
+            throw new Error('Error al obtener el token del pago: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async calcularTotalVenta(ventaID) {
+        const connection = await createConnection();
+        try {
+            const [rows] = await connection.query(
+                'SELECT SUM(cantidad * precio) AS total FROM detalle_venta WHERE ventaID = ?',
+                [ventaID]
+            );
+            return rows[0].total;
+        } catch (error) {
+            console.error('Error al calcular el total de la venta:', error.message);
+            throw new Error('Error al calcular el total de la venta: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+
 }

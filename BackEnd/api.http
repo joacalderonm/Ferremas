@@ -121,6 +121,7 @@ Content-Type: application/json
 
 ### Venta
 
+### Crear Venta y Redirigir a Webpay
 POST http://localhost:1234/webpay/comprar
 Content-Type: application/json
 
@@ -130,12 +131,65 @@ Content-Type: application/json
     {
       "productoID": 1,
       "cantidad": 2,
-      "precio": 100
+      "precio": 1000
     },
     {
       "productoID": 2,
       "cantidad": 1,
-      "precio": 200
+      "precio": 2000
     }
   ]
 }
+
+### compra pago
+POST http://localhost:1234/webpay/createPago
+Content-Type: application/json
+
+{
+ "ventaID": 11
+}
+
+### compra pago
+POST http://localhost:1234/webpay/pagoFinal
+Content-Type: application/json
+
+{
+  "clienteID": 1,
+  "productos": [
+    {
+      "productoID": 1,
+      "cantidad": 2,
+      "precio": 10000
+    },
+    {
+      "productoID": 2,
+      "cantidad": 1,
+      "precio": 15000
+    }
+  ]
+}
+
+
+### TOKEN 
+GET http://localhost:1234/webpay/token/O-56f44f8a-4289-44de-a
+
+
+### Commit
+POST http://localhost:1234/webpay/commit
+Content-Type: application/json
+
+{
+  "token_ws": "01ab31506c1e55a27907761a0edd2f6a6dfb65895a86426aa30eb82108524c91"
+}
+
+
+### Commit
+GET http://localhost:1234/webpay/commit
+Content-Type: application/json
+
+{
+  "token": "01ab3ae6d814a96ea0e2e0a1bc676fc079d0c48154c348d55d694b0fc1225bfe",
+}
+
+### detalle venta
+GET http://localhost:1234/detalleVenta/O-040764d3-48d9-429c-a
