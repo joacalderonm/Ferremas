@@ -5,10 +5,14 @@
     "cSpell.words": [
         "categoria",
         "descripcion",
+        "envio",
+        "metodo",
         "Sesion",
         "SESION",
+        "transaccion",
         "transbank",
         "Transbank",
+        "uuidv",
         "webpay"
     ]
 }

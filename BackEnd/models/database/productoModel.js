@@ -1,5 +1,4 @@
-import { createConnection } from "./config.js";
-
+import { createConnection } from "../config.js";
 export class ProductoModel {
     static async getAll ({ nombre }) {
         const connection = await createConnection();
@@ -98,7 +97,7 @@ export class ProductoModel {
         try {
             await connection.query(
                 `INSERT INTO producto (nombre,descripcion,precio,stock,categoriaID) VALUES (?,?,?,?,?);`,
-                [nombre, descripcion, precio, stock, categoriaID] // Ensure the comma is here
+                [nombre, descripcion, precio, stock, categoriaID] 
             );
             console.log(result);
         } catch (error) {

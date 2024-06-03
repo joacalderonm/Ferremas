@@ -1,4 +1,4 @@
-import '../css/Styles.css'
+import '../../css/Styles.css'
 
 export const Footer = () => {
     return ( 

@@ -4,7 +4,7 @@ const CartContext = createContext();
 
 const cartReducer = (state, action) => {
     switch (action.type) {
-        case 'ADD_TO_CART':
+        case 'ADD_TO_CART': {
             const existingProduct = state.find(item => item.productoID === action.product.productoID);
             if (existingProduct) {
                 return state.map(item =>
@@ -14,6 +14,7 @@ const cartReducer = (state, action) => {
                 );
             }
             return [...state, { ...action.product, quantity: 1 }];
+        }
         case 'REMOVE_FROM_CART':
             return state.filter(item => item.productoID !== action.id);
         case 'UPDATE_QUANTITY':
@@ -43,7 +44,6 @@ export const CartProvider = ({ children }) => {
         </CartContext.Provider>
     );
 };
-
 
 export const useCart = () => {
     return useContext(CartContext);
