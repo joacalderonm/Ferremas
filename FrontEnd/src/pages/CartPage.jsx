@@ -41,25 +41,25 @@ const CartPage = () => {
                 precio: item.precio
             }))
         };
-    
+
         try {
             // Confirmar la compra y crear la venta
             const response = await fetchCarrito(carritoData);
             console.log('Compra confirmada:', response);
             setConfirmPurchase(true);
-    
+
             const dataOrder = {
                 buyOrder: response.buyOrder,
                 sessionId: response.sessionId,
                 amount: response.amount
             };
-    
+
             console.log(dataOrder);
-    
+
             // Crear la transacción con Webpay
             const dataCreate = await fetchCreate(dataOrder);
             setTransaccion(dataCreate);
-    
+
             // Almacenar buyOrder en localStorage
             localStorage.setItem('webpayToken', dataCreate.token);
 
@@ -67,13 +67,13 @@ const CartPage = () => {
             const form = document.createElement('form');
             form.action = dataCreate.url;
             form.method = 'POST';
-    
+
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'token_ws';
             input.value = dataCreate.token;
             form.appendChild(input);
-    
+
             document.body.appendChild(form);
             form.submit();
         } catch (error) {
