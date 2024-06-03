@@ -47,7 +47,7 @@ export class webPayModel {
     }
 
     static async createPago(input) {
-        const { ventaID, buyOrder, sessionId, fecha, amount, metodoPagoID, estadoPago, token } = input;
+        const { ventaID, buyOrder, sessionId, fecha = new Date(), amount, metodoPagoID, estadoPago, token } = input;
         const connection = await createConnection();
 
         try {
@@ -58,6 +58,26 @@ export class webPayModel {
         } catch (error) {
             console.error('Error al crear pago en la base de datos:', error.message);
             throw new Error('Error al crear pago en la base de datos: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async getVentaIdByBuyOrder (buyOrder) {
+        const connection = await createConnection();
+        try {
+            const [result] = await connection.query(
+                'SELECT v.ventaID FROM venta v INNER JOIN pago p ON v.ventaID = p.ventaID WHERE p.buyOrder = ?',
+                [buyOrder]
+            );
+            if (result.length > 0) {
+                return result[0].ventaID;
+            } else {
+                throw new Error('Venta no encontrada para la orden de compra proporcionada.');
+            }
+        } catch (error) {
+            console.error('Error al obtener el ID de la venta por la orden de compra:', error.message);
+            throw new Error('Error al obtener el ID de la venta por la orden de compra: ' + error.message);
         } finally {
             await connection.end();
         }

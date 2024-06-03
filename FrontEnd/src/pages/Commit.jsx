@@ -65,7 +65,17 @@ const Commit = () => {
         ) : (
           <p className="text-red-500 text-center">No se encontró un buyOrder válido. Por favor, inicie una nueva transacción.</p>
         )}
-        {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
+        {error && (
+        <div className="mt-4 text-center">
+          <p className="text-red-500">{error}</p>
+          <button
+            className="mt-4 bg-red-500 text-white font-semibold py-2 px-6 rounded hover:bg-red-600 transition-colors"
+            onClick={() => window.location.href = '/'}
+          >
+            Volver al Inicio
+          </button>
+        </div>
+        )}
         {commitData && (
           <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-md">
             {commitData.viewData.commitResponse && (

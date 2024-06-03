@@ -46,7 +46,6 @@ export class WebpayController {
             buyOrder,
             sessionId,
             amount: Number(amount),
-            fecha: new Date().toISOString(),
             metodoPagoID: 1,
             estadoPago: 'PROCESANDO',
             token: null,
@@ -140,40 +139,60 @@ export class WebpayController {
         };
 
         if (token && !tbkToken) {
+          const commitResponse = await new WebpayPlus.Transaction().commit(token);
+          viewData = {
+            token,
+            commitResponse,
+          };
+          step = "Confirmar Transacción";
+          stepDescription =
+            "En este paso tenemos que confirmar la transacción con el objetivo de avisar a " +
+            "Transbank que hemos recibido la transacción ha sido recibida exitosamente. En caso de que " +
+            "no se confirme la transacción, ésta será regresada.";
 
-            const commitResponse = await new WebpayPlus.Transaction().commit(token);
-            viewData = {
-                token,
-                commitResponse,
-            };
-            step = "Confirmar Transacción";
-            stepDescription =
-                "En este paso tenemos que confirmar la transacción con el objetivo de avisar a " +
-                "Transbank que hemos recibido la transacción ha sido recibida exitosamente. En caso de que " +
-                "no se confirme la transacción, ésta será regresada.";
+          // Obtener ventaID usando buy_order
+          const ventaID = await this.webpayModel.getVentaIdByBuyOrder(commitResponse.buy_order);
 
-            res.json({ step, stepDescription, viewData });
-            return;
+          // Actualizar el estado de la venta
+          await this.webpayModel.updateEstadoVenta({
+            estado: commitResponse.status,
+            ventaID: ventaID // Asegúrate de que esto sea el ID correcto
+          });
+
+          res.json({ step, stepDescription, viewData });
+          return;
         } else if (!token && !tbkToken) {
-            step = "El pago fue anulado por tiempo de espera.";
-            stepDescription =
-                "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
+          step = "El pago fue anulado por tiempo de espera.";
+          stepDescription =
+            "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
+
+
         } else if (!token && tbkToken) {
-            step = "El pago fue anulado por el usuario.";
-            stepDescription =
-                "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+          step = "El pago fue anulado por el usuario.";
+          stepDescription =
+            "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+
         } else if (token && tbkToken) {
-            step = "El pago es inválido.";
-            stepDescription =
-                "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+          step = "El pago es inválido.";
+          stepDescription =
+            "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
         }
+
+        // Obtener ventaID usando buy_order
+        const ventaID = await this.webpayModel.getVentaIdByBuyOrder(commitResponse.buy_order);
+
+        // Actualizar el estado de la venta
+        await this.webpayModel.updateEstadoVenta({
+          estado: commitResponse.status,
+          ventaID: ventaID
+        });
 
         res.json({ step, stepDescription, viewData });
     } catch (error) {
         console.error('Error en commit:', error);
         res.status(500).json({ message: 'Error al confirmar la transacción', details: error.message });
     }
-});
+  });
 
 
   status = asyncHandler(async (req, res, next) => {
