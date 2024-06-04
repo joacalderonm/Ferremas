@@ -193,3 +193,8 @@ Content-Type: application/json
 
 ### detalle venta
 GET http://localhost:1234/detalleVenta/O-040764d3-48d9-429c-a
+
+
+### detalle venta
+
+GET http://localhost:1234/venta/O-2243680a-5cad-4e3e-8

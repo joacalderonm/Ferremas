@@ -39,7 +39,8 @@ const CartPage = () => {
                 productoID: item.productoID,
                 cantidad: item.quantity,
                 precio: item.precio
-            }))
+            })),
+            total: calculateTotalCart()
         };
 
         try {
@@ -51,7 +52,7 @@ const CartPage = () => {
             const dataOrder = {
                 buyOrder: response.buyOrder,
                 sessionId: response.sessionId,
-                amount: response.amount
+                amount: carritoData.total
             };
 
             console.log(dataOrder);
@@ -84,20 +85,27 @@ const CartPage = () => {
     return (
         <div className="container mx-auto py-8 px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Carrito de Compras</h2>
-            <div className="flex justify-center mb-4">
-                <button
-                    className={`px-4 py-2 mr-2 rounded ${deliveryOption === 'retiro' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                    onClick={() => setDeliveryOption('retiro')}
-                >
-                    Retiro
-                </button>
-                <button
-                    className={`px-4 py-2 rounded ${deliveryOption === 'delivery' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                    onClick={() => setDeliveryOption('delivery')}
-                >
-                    Delivery
-                </button>
+            <div className="text-center mb-4">
+                <p className="text-lg font-semibold">
+                    Tienes {cart.length} {cart.length === 1 ? 'producto' : 'productos'} en tu carrito.
+                </p>
             </div>
+            {cart.length > 0 && (
+                <div className="flex justify-center mb-4">
+                    <button
+                        className={`px-4 py-2 mr-2 rounded ${deliveryOption === 'retiro' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                        onClick={() => setDeliveryOption('retiro')}
+                    >
+                        Retiro
+                    </button>
+                    <button
+                        className={`px-4 py-2 rounded ${deliveryOption === 'delivery' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                        onClick={() => setDeliveryOption('delivery')}
+                    >
+                        Delivery
+                    </button>
+                </div>
+            )}
             {cart.length > 0 ? (
                 <div className="max-w-lg mx-auto">
                     {cart.map((item) => (
@@ -155,7 +163,14 @@ const CartPage = () => {
                     </div>
                 </div>
             ) : (
-                <p className="text-center">No hay productos en el carrito.</p>
+                <div className="mt-4 text-center">
+                    <button
+                        className="mt-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+                        onClick={() => window.location.href = '/categoria'}
+                    >
+                       Añadir Productos
+                    </button>
+                </div>
             )}
         </div>
     );
