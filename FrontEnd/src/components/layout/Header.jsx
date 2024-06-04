@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { useCart } from '../CartContext';
 import logo from '../../assets/Logo.png';
@@ -51,5 +51,5 @@ export const Header = () => {
         </button>
       </div></>
     </header>
-  );
-</>)}
+</>
+)}

@@ -6,8 +6,9 @@ import { createMaterialRouter } from './routes/materialRoute.js';
 import { createMarcaRouter } from './routes/marcaController.js';
 import { createWebpayRouter } from './routes/webpayRoute.js';
 import { createDetalleVentaRouter } from './routes/detalleVentaRoute.js';
+import { createVentaRouter } from './routes/ventaRoute.js';
 
-export const createApp = ({ productoModel, categoriaModel, marcaModel, materialModel, webpayModel, detalleVentaModel}) =>{
+export const createApp = ({ productoModel, categoriaModel, marcaModel, materialModel, webpayModel, detalleVentaModel, ventaModel}) =>{
 
   const app = express();
 
@@ -22,6 +23,7 @@ export const createApp = ({ productoModel, categoriaModel, marcaModel, materialM
   app.use('/material', createMaterialRouter ({ materialModel }));
   app.use('/webpay', createWebpayRouter ({ webpayModel }));
   app.use('/detalleVenta', createDetalleVentaRouter ({ detalleVentaModel }));
+  app.use('/venta', createVentaRouter ({ ventaModel }));
 
   const PORT = process.env.PORT ?? 1234;
   
