@@ -1,5 +1,5 @@
 import propTypes from 'prop-types';
-import { useCart } from './CartContext';
+import { useCart } from '../components/CartContext';
   
 const Producto = ({categoria, filtrarProductos, productos}) => {
 

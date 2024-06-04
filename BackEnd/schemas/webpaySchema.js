@@ -34,9 +34,11 @@ const pagoSchema = z.object({
     ventaID: z.number().int().positive(),
     buyOrder: z.string().nullable(),
     sessionId: z.string().nullable(),
+    fecha: z.string().nullable().optional(),
     amount: z.number().int().positive(),
     metodoPagoID: z.number().int().positive(),
-    estado_pago: z.string().nullable()
+    estadoPago: z.string().nullable(),
+    token: z.string().nullable(),
 });
 
 export function validatePago(input) {
