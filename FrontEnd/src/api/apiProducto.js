@@ -62,3 +62,20 @@ export const fetchProductoById = async (id) => {
     throw error;
   }
 };
+
+export const fetchRandomProductos = async () => {
+  try {
+    const response = await axios.get(productAPI);
+    const productos = response.data;
+
+    // Selecciona 15 productos aleatorios
+    const productosAleatorios = productos
+      .sort(() => Math.random() - Math.random())
+      .slice(0, 10);
+
+    return productosAleatorios;
+  } catch (error) {
+    console.error('Error al obtener los productos aleatorios:', error);
+    throw error;
+  }
+};
