@@ -10,7 +10,7 @@ function Index() {
       <Slider />
 
       <div class="flex justify-center mt-8">
-  <h3 class="text-2xl font-bold">Ofertas en Ferremas</h3>
+  <h3 class="text-2xl font-bold">Ofertas en Ferremass</h3>
 
 </div>
   <Oferta/>

@@ -31,7 +31,7 @@ const Oferta = () => {
   }
 
   if (productos.length === 0) {
-    return <p>Cargando...</p>;
+    return <p>Cargando..s.</p>;
   }
 
   return (
