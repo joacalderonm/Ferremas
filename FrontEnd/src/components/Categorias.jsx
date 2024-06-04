@@ -12,9 +12,10 @@ const Categorias = () => {
     const obtenerCategorias = async () => {
       try {
         const data = await fetchCategoria();
-        const categoriaMayus = data.map((categoria) => ({
+        const categoriaMayus = data.map((categoria, index) => ({
           ...categoria,
           nombre: categoria.nombre.toUpperCase(),
+          key: index,  // Generar una clave única temporalmente si es necesario
         }));
         setCategorias(categoriaMayus);
       } catch (error) {
@@ -38,7 +39,7 @@ const Categorias = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {categorias.map((categoria) => (
             <div
-              key={categoria.categoriaID}
+              key={categoria.categoriaID}  // Asegúrate de que este campo sea único
               className="relative group cursor-pointer"
               onClick={() => handleClick(categoria.categoriaID)}
             >
