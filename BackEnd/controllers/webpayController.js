@@ -79,14 +79,18 @@ export class WebpayController {
     try {
 
       console.log("================================================================================");
-      console.log(req);
+      console.log(req.body);
       console.log("================================================================================");
       let params = req.method === "GET" ? req.query : req.body;
       
+      
+
       let token = params.token_ws;
       let tbkToken = params.TBK_TOKEN;
       let tbkOrdenCompra = params.TBK_ORDEN_COMPRA;
       let tbkIdSesion = params.TBK_ID_SESION;
+
+      console.log("token: ", token, "tbkToken: ", tbkToken, "tbkOrdenCompra: ", tbkOrdenCompra, "tbkIdSesion: ", tbkIdSesion)
       
       let step = null;
       let stepDescription = null;
