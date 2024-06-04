@@ -37,7 +37,7 @@ const ProductoCard = ({ producto }) => {
           className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
           onClick={() => handleAddToCart(producto)}
         >
-          Añadir al Carritoa
+          Añadir al Carrito
         </button>
       </div>
     </div>
