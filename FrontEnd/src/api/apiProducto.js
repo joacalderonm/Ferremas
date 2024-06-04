@@ -12,6 +12,7 @@ export const fetchProducto = async () => {
   }
 };
 
+// Otras funciones que ya tienes
 export const fetchProductosPorCategoria = async (id) => {
   try {
     const response = await axios.get(`${productAPI}/categoria/${id}`);
@@ -51,3 +52,13 @@ export const fetchProductoByMaxPrice = async (id) => {
     throw error;
   }
 }
+
+export const fetchProductoById = async (id) => {
+  try {
+    const response = await axios.get(`${productAPI}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el producto por ID:', error);
+    throw error;
+  }
+};

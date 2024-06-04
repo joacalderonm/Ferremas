@@ -1,3 +1,7 @@
+.body{
+  background: #000000;
+}
+
 .header {
   display: flex;
   justify-content: space-between; /* Coloca los elementos al inicio y al final */
@@ -304,7 +308,7 @@
   margin-left: 20px; /* Espacio entre elementos del menú */
 }
 
-.client {
+.client1 {
   color: white;
   background-color: #c11906;
   padding: 4px 12px; /* Espaciado interno del botón del carrito */
@@ -355,6 +359,12 @@
     display: none;
   }
 
+  .hidden{
+    display: none;
+  }
+.client1{
+  display: none;
+}
   .flex.items-center.space-x-4 {
     display: flex;
     flex-direction: row;
