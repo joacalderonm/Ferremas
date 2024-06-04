@@ -1,26 +1,20 @@
 import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 import slider1 from '../assets/slider1.png';
 import slider2 from '../assets/slider2.png';
 import slider3 from '../assets/slider3.png';
 
-const images = [slider1,slider1,slider1];
+const images = [slider1];
 
 const ImageCarousel = () => {
   const settings = {
- 
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
   };
 
   return (
     <div className="relative w-full h-96">
-      <Slider {...settings}>
+  
         {images.map((image, index) => (
           <div key={index} className="relative h-96">
             <img 
@@ -35,7 +29,7 @@ const ImageCarousel = () => {
             </div>
           </div>
         ))}
-      </Slider>
+    
     </div>
   );
 };
