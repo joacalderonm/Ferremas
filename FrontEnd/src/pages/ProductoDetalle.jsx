@@ -1,22 +1,22 @@
-import { fetchProductoById } from '../api/apiProducto'
+import { fetchProductoById } from '../api/apiProducto';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 function ProductoDetalle() {
-  const [producto, setProducto] = useState({})
-  const { id } = useParams()
+  const [producto, setProducto] = useState({});
+  const { id } = useParams();
 
   useEffect(() => {
     const obtenerProducto = async () => {
       try {
-        const productoData = await fetchProductoById(id)
-        setProducto(productoData)
+        const productoData = await fetchProductoById(id);
+        setProducto(productoData);
       } catch (error) {
-        console.error('Error al obtener el producto:', error)
+        console.error('Error al obtener el producto:', error);
       }
     };
     obtenerProducto();
-  }, [id])
+  }, [id]);
 
   return (
     <div>
@@ -27,7 +27,7 @@ function ProductoDetalle() {
       <p>Marca: {producto.marca}</p>
       <p>Material: {producto.material}</p>
     </div>
-  )
+  );
 }
 
-export default ProductoDetalle
+export default ProductoDetalle;

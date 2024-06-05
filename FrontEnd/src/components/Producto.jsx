@@ -1,14 +1,24 @@
 import propTypes from 'prop-types';
+//import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/CartContext';
-  
+import { useState } from 'react';
+import Modal from './Modal';
+
 const Producto = ({categoria, filtrarProductos, productos}) => {
+  const { dispatch } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-    const { dispatch } = useCart();
-  
-    const handleAddToCart = (producto) => {
-      dispatch({ type: 'ADD_TO_CART', product: producto });
-    };
+  const handleAddToCart = (producto) => {
+    dispatch({ type: 'ADD_TO_CART', product: producto });
+  };      
 
+  const handleClink = (producto) => {
+    setSelectedProduct(producto);
+  }
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+  }
 
   return (
     <div>
@@ -27,10 +37,16 @@ const Producto = ({categoria, filtrarProductos, productos}) => {
                 <p className="text-blue-600 font-bold mt-4">Precio: ${producto.precio_formateado}</p>
                 <button
                     className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-                    onClick={() => handleAddToCart(producto)}  // Utilizar productoID en lugar de id
+                    onClick={() => handleAddToCart(producto)}
                   >
                     Añadir al Carrito
                   </button>
+                <button
+                  className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                  onClick={() => handleClink(producto)}
+                >
+                  Ver más
+                </button>
               </div>
             </div>
           ))
@@ -40,6 +56,10 @@ const Producto = ({categoria, filtrarProductos, productos}) => {
           </div>
         )}
       </div>
+      {selectedProduct && <Modal 
+        producto={selectedProduct} 
+        closeModal={closeModal} 
+      />}
     </div>
   );
 };
