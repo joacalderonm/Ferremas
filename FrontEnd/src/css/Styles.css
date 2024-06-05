@@ -51,7 +51,7 @@
 
 .barrabuscar {
   padding: 8px 40px 8px 12px; /* Espaciado interno del campo de búsqueda */
-  border: 1px solid #CCCCCC; /* Borde del campo de búsqueda */
+  border: 1px solid #000000; /* Borde del campo de búsqueda */
   border-radius: 5px; /* Borde redondeado */
   width: 200px; /* Ancho del campo de búsqueda */
 }
@@ -63,18 +63,12 @@
   cursor: pointer;
   width: 30px; /* Cambiar el cursor al pasar sobre el icono */
 }
+.buscador1{
+  width: 300px;
+}
 
-
-
-.carrito {
-  display: flex;
-  align-items: center;
-  background-color: #c11906; /* Color de fondo del botón del carrito */
-  color: #ffffff; /* Color del texto del botón del carrito */
-  border: none; /* Sin borde */
-  padding: 8px 16px; /* Espaciado interno del botón del carrito */
-  border-radius: 5px; /* Borde redondeado */
-  cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+.carrito1{
+  display: none;
 }
 
 
@@ -93,6 +87,8 @@
 .img-principal {
   margin-top: 20px;
 }
+
+
 
 .img-principal h2 {
   font-size: 24px;
@@ -216,7 +212,7 @@
 }
 
 
-/* Ocultar el buscador en pantallas grandes */
+
 .buscador {
   display: none;
 }
@@ -228,6 +224,17 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+  }
+
+  .carrito1{
+    display: flex;
+    align-items: center;
+    background-color: #c11906; /* Color de fondo del botón del carrito */
+    color: #ffffff; /* Color del texto del botón del carrito */
+    border: none; /* Sin borde */
+    padding: 8px 16px; /* Espaciado interno del botón del carrito */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
   }
 .hidden{
   display: none;
@@ -262,17 +269,16 @@
     display: flex;
   }
   
-
+  .carrito{
+    display: none;
+  }
 }
 /* Asegurarte de que el menú se despliega correctamente */
 .menu {
   transition: max-height 0.3s ease-out;
 }
 
-.menu.hidden {
 
- 
-}
 
 .menu.flex {
   max-height: 500px; /* Ajustar según sea necesario */
@@ -360,10 +366,11 @@
   .map{
     display: none;
   }
-
-  .logo span{
+  .carrito{
     display: none;
   }
+
+ 
   .buscador1 {
     display: none;
   }
