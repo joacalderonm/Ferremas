@@ -20,7 +20,7 @@ const CategoriaDetalle = () => {
   const [maxPrecio, setMaxPrecio] = useState(0); // Valor máximo dinámico
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
     const obtenerDatos = async () => {
       try {
         const categoriaData = await fetchCategoriaById(id);

@@ -61,3 +61,30 @@ export const fetchProductoByMaxPrice = async (id) => {
     throw error;
   }
 }
+
+export const fetchProductoById = async (id) => {
+  try {
+    const response = await axios.get(`${productAPI}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el producto por ID:', error);
+    throw error;
+  }
+};
+
+export const fetchRandomProductos = async () => {
+  try {
+    const response = await axios.get(productAPI);
+    const productos = response.data;
+
+    // Selecciona 15 productos aleatorios
+    const productosAleatorios = productos
+      .sort(() => Math.random() - Math.random())
+      .slice(0, 10);
+
+    return productosAleatorios;
+  } catch (error) {
+    console.error('Error al obtener los productos aleatorios:', error);
+    throw error;
+  }
+};
