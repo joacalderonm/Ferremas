@@ -97,6 +97,8 @@ useEffect(() => {
           categoria={categoria}
           filtrarProductos={filtrarProductos}
           productos={productosFiltrados}
+          marcas={marcas}
+          materiales={materiales}
         />
       </div>
     </div>

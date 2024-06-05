@@ -1,5 +1,5 @@
-import { fetchProductoById } from '../api/apiProducto';
 import { useParams } from 'react-router-dom';
+import { fetchProductoById } from '../api/apiProducto';
 import { useState, useEffect } from 'react';
 
 function ProductoDetalle() {

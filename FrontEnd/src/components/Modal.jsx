@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-const Modal = ({ producto, closeModal }) => {
+const Modal = ({ producto, closeModal, marcas, materiales }) => {
   const modalRef = useRef(null);
 
   const handleCloseModal = (event) => {
@@ -9,6 +9,9 @@ const Modal = ({ producto, closeModal }) => {
       closeModal();
     }
   };
+
+  const marca = marcas.find((marca) => marca.marcaID === producto.marcaID);
+  const material = materiales.find((material) => material.materialID === producto.materialID);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" onClick={handleCloseModal} ref={modalRef}>
@@ -21,9 +24,9 @@ const Modal = ({ producto, closeModal }) => {
           <p className="text-gray-800 mt-4">{producto.descripcion}</p>
           <p className="text-blue-900 font-bold mt-4 text-4xl">{producto.precio_formateado}</p>
           <hr className="mt-2 mb-4 border-gray-300" />
-          <p className="mt-4 text-gray-600"><span className="font-bold">Marca:</span> {producto.marca}</p>
+          <p className="mt-4 text-gray-600"><span className="font-bold">Marca:</span> {marca ? marca.nombre : 'Desconocida'}</p>
           <hr className="mt-2 mb-4 border-gray-300" />
-          <p className="mt-2 text-gray-600"><span className="font-bold">Material:</span> {producto.material}</p>
+          <p className="mt-2 text-gray-600"><span className="font-bold">Material:</span> {material ? material.nombre : 'Desconocido'}</p>
           <hr className="mt-2 mb-4 border-gray-300" />
           <p className="mt-4 text-green-600"><span className="font-bold">Stock:</span> {producto.stock}</p>
           <hr className="mt-2 mb-4 border-gray-300" />
@@ -49,11 +52,23 @@ Modal.propTypes = {
     descripcion: PropTypes.string.isRequired,
     imagen: PropTypes.string.isRequired,
     precio_formateado: PropTypes.string.isRequired,
-    marca: PropTypes.string.isRequired,
-    material: PropTypes.string.isRequired,
+    marcaID: PropTypes.number.isRequired,
+    materialID: PropTypes.number.isRequired,
     stock: PropTypes.number.isRequired,
   }).isRequired,
   closeModal: PropTypes.func.isRequired,
+  marcas: PropTypes.arrayOf(
+    PropTypes.shape({
+      marcaID: PropTypes.number.isRequired,
+      nombre: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  materiales: PropTypes.arrayOf(
+    PropTypes.shape({
+      materialID: PropTypes.number.isRequired,
+      nombre: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Modal;
