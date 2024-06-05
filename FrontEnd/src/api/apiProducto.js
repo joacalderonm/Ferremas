@@ -60,7 +60,7 @@ export const fetchRandomProductos = async () => {
     // Selecciona 15 productos aleatorios
     const productosAleatorios = productos
       .sort(() => Math.random() - Math.random())
-      .slice(0, 10);
+      .slice(0, 4);
 
     return productosAleatorios;
   } catch (error) {

@@ -33,7 +33,7 @@ const ProductoCard = ({ producto }) => {
         )}
       </p>
         <button
-          className="w-full bg-red-500 hover:bg-red-800 text-white font-semibold py-2 px-4 rounded"
+          className="w-full bg-gray-500 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded"
           onClick={() => handleAddToCart(producto)}
         >
           Añadir al Carrito

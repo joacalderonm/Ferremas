@@ -31,12 +31,12 @@ const Oferta = () => {
   }
 
   if (productos.length === 0) {
-    return <p>Cargando..s.</p>;
+    return <p>Cargando...</p>;
   }
 
   return (
-    <div className="container  p-1 px-2 lg:px-1">
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 gap-1">
+    <div className="container  p-1 px-3 lg:px-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-1">
         {productos.map((producto) => (
           <ProductoCard key={producto.productoID} producto={producto} />
         ))}
