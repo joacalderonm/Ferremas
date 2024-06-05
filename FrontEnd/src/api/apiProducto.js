@@ -62,16 +62,6 @@ export const fetchProductoByMaxPrice = async (id) => {
   }
 }
 
-export const fetchProductoById = async (id) => {
-  try {
-    const response = await axios.get(`${productAPI}/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error al obtener el producto por ID:', error);
-    throw error;
-  }
-};
-
 export const fetchRandomProductos = async () => {
   try {
     const response = await axios.get(productAPI);
