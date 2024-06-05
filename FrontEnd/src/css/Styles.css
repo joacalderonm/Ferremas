@@ -229,8 +229,12 @@
     justify-content: space-between;
     width: 100%;
   }
-
-  
+.hidden{
+  display: none;
+}
+  .client{
+    display: none;
+  }
 
   .buscador {
     display: flex;
@@ -338,6 +342,8 @@
   cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
 }
 
+
+
 .menu-toggle {
   margin-left: 10px;
 }
@@ -350,6 +356,9 @@
   .buscador {
     display: flex;
     margin-left: 1rem;
+  }
+  .map{
+    display: none;
   }
 
   .logo span{
@@ -372,4 +381,67 @@
     justify-content: center;
   }
 }
+
+/* Añadir estos estilos al archivo CSS global o al módulo CSS correspondiente */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.cart-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  align-items: center;
+}
+
+.cart-item img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-left: 1rem;
+  text-align: center;
+}
+
+.cart-item-info h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item-info p {
+  margin-bottom: 0.5rem;
+}
+
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-item-actions button {
+  margin-bottom: 0.5rem;
+}
+
+/* Estilos responsivos */
+@media (min-width: 768px) {
+  .cart-item {
+      flex-direction: row;
+      align-items: flex-start;
+  }
+
+  .cart-item-info {
+      text-align: left;
+  }
+}
+
 

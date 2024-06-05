@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { useCart } from '../components/CartContext';
 import { fetchCarrito, fetchCreate } from '../api/apiWebpayPlus';
+import "../css/Styles.css";
+
 
 const CartPage = () => {
     const { cart, dispatch } = useCart();
-    const [deliveryOption, setDeliveryOption] = useState('retiro'); // Estado para la opción de entrega: 'retiro' o 'delivery'
-    const [confirmPurchase, setConfirmPurchase] = useState(false); // Estado para confirmar la compra
-    const [transaccion, setTransaccion] = useState(null); // Estado para almacenar la transacción
+    const [deliveryOption, setDeliveryOption] = useState('retiro');
+    const [confirmPurchase, setConfirmPurchase] = useState(false);
+    const [transaccion, setTransaccion] = useState(null);
 
     const handleRemoveFromCart = (productoID) => {
         dispatch({ type: 'REMOVE_FROM_CART', id: productoID });
     };
 
     const handleUpdateQuantity = (productoID, quantity) => {
-        dispatch({ type: 'UPDATE_QUANTITY', id: productoID, quantity });
+        if (quantity >= 1) {
+            dispatch({ type: 'UPDATE_QUANTITY', id: productoID, quantity });
+        }
     };
 
     const calculateTotalPerProduct = (price, quantity) => {
@@ -34,16 +38,16 @@ const CartPage = () => {
 
     const handleConfirmPurchase = async () => {
         const carritoData = {
-            clienteID: 1, // Debes obtener el clienteID del contexto o de algún estado
+            clienteID: 1,
             productos: cart.map(item => ({
                 productoID: item.productoID,
                 cantidad: item.quantity,
                 precio: item.precio
-            }))
+            })),
+            total: calculateTotalCart()
         };
 
         try {
-            // Confirmar la compra y crear la venta
             const response = await fetchCarrito(carritoData);
             console.log('Compra confirmada:', response);
             setConfirmPurchase(true);
@@ -51,19 +55,16 @@ const CartPage = () => {
             const dataOrder = {
                 buyOrder: response.buyOrder,
                 sessionId: response.sessionId,
-                amount: response.amount
+                amount: carritoData.total
             };
 
             console.log(dataOrder);
 
-            // Crear la transacción con Webpay
             const dataCreate = await fetchCreate(dataOrder);
             setTransaccion(dataCreate);
 
-            // Almacenar buyOrder en localStorage
             localStorage.setItem('webpayToken', dataCreate.token);
 
-            // Redirigir a la URL de Webpay usando el formulario
             const form = document.createElement('form');
             form.action = dataCreate.url;
             form.method = 'POST';
@@ -84,20 +85,27 @@ const CartPage = () => {
     return (
         <div className="container mx-auto py-8 px-4">
             <h2 className="text-3xl font-bold text-center mb-8">Carrito de Compras</h2>
-            <div className="flex justify-center mb-4">
-                <button
-                    className={`px-4 py-2 mr-2 rounded ${deliveryOption === 'retiro' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                    onClick={() => setDeliveryOption('retiro')}
-                >
-                    Retiro
-                </button>
-                <button
-                    className={`px-4 py-2 rounded ${deliveryOption === 'delivery' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
-                    onClick={() => setDeliveryOption('delivery')}
-                >
-                    Delivery
-                </button>
+            <div className="text-center mb-4">
+                <p className="text-lg font-semibold">
+                    Tienes {cart.length} {cart.length === 1 ? 'producto' : 'productos'} en tu carrito.
+                </p>
             </div>
+            {cart.length > 0 && (
+                <div className="flex justify-center mb-4">
+                    <button
+                        className={`px-4 py-2 mr-2 rounded ${deliveryOption === 'retiro' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                        onClick={() => setDeliveryOption('retiro')}
+                    >
+                        Retiro
+                    </button>
+                    <button
+                        className={`px-4 py-2 rounded ${deliveryOption === 'delivery' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+                        onClick={() => setDeliveryOption('delivery')}
+                    >
+                        Delivery
+                    </button>
+                </div>
+            )}
             {cart.length > 0 ? (
                 <div className="max-w-lg mx-auto">
                     {cart.map((item) => (
@@ -121,17 +129,30 @@ const CartPage = () => {
                                         className="border rounded w-16 text-center"
                                     />
                                     <button
-                                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-                                        onClick={() => handleRemoveFromCart(item.productoID)}
+                                        className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-l"
+                                        onClick={() => handleUpdateQuantity(item.productoID, item.quantity - 1)}
                                     >
-                                        Eliminar
+                                        -
+                                    </button>
+                                    <span className="px-4">{item.quantity}</span>
+                                    <button
+                                        className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-r"
+                                        onClick={() => handleUpdateQuantity(item.productoID, item.quantity + 1)}
+                                    >
+                                        +
                                     </button>
                                 </div>
+                                <button
+                                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+                                    onClick={() => handleRemoveFromCart(item.productoID)}
+                                >
+                                    Eliminar
+                                </button>
                             </div>
                         </div>
                     ))}
                     <div className="text-xl font-bold text-right mt-4">
-                        Subtotal: ${calculateSubtotal()} {/* Mostrar el subtotal sin tarifa de envío */}
+                        Subtotal: ${calculateSubtotal()}
                     </div>
                     <div className="text-xl font-bold text-right mt-2">
                         Tarifa de Envío: ${deliveryOption === 'delivery' ? 10000 : 0}
@@ -157,7 +178,14 @@ const CartPage = () => {
                     </div>
                 </div>
             ) : (
-                <p className="text-center">No hay productos en el carrito.</p>
+                <div className="mt-4 text-center">
+                    <button
+                        className="mt-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+                        onClick={() => window.location.href = '/categoria'}
+                    >
+                        Añadir Productos
+                    </button>
+                </div>
             )}
         </div>
     );

@@ -155,4 +155,33 @@ export class webPayModel {
         }
     }
 
+    static async getVentaIdByToken({ token }) {
+        const connection = await createConnection();
+        try {
+            const [productos] = await connection.query(
+                `SELECT dv.productoID as "productoID", dv.cantidad as "cantidad"
+                FROM detalle_venta dv 
+                INNER JOIN pago p ON dv.ventaID = p.ventaID
+                WHERE p.token = ?;`,
+                [token]
+            );
+
+            return productos;
+        } finally {
+            await connection.end();
+        }
+    }
+
+    static async updateStock ({ stock, productoID }) {
+        const connection = await createConnection();
+        try {
+            await connection.query(
+                'UPDATE producto SET stock = stock - ? WHERE productoID = ?;',
+                [stock, productoID]
+            );
+        } finally {
+            await connection.end();
+        }
+    }
+
 }

@@ -8,13 +8,16 @@ const Commit = () => {
   const [commitData, setCommitData] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState('');
-  const [status, setStatus] = useState('');
   const [detalleVenta, setDetalleVenta] = useState([]);
+  const [buttonVisible, setButtonVisible] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('webpayToken');
     if (storedToken) {
       setToken(storedToken);
+    } else {
+      setToken(null);
     }
   }, []);
 
@@ -31,26 +34,31 @@ const Commit = () => {
         }
       }
     };
-
+  
     obtenerCarrito();
   }, [commitData]);
 
   const handleCommit = async () => {
     try {
-      setStatus('Procesando transacción...');
       const data = { token_ws: token }; // Asegúrate de que el token sea correcto y esté presente
       const commitData = await fetchCommitPost(data);
       setCommitData(commitData);
       setError(null);
-      setStatus('Transacción confirmada con éxito');
       
       // Limpiar el carrito después de confirmar la transacción
       dispatch({ type: 'CLEAR_CART' });
       
+      // Eliminar el token de localStorage después de confirmar la transacción
+      localStorage.removeItem('webpayToken');
+      setToken(null);
+
+      // Ocultar el botón y mostrar el mensaje
+      setButtonVisible(false);
+      setShowMessage(true);
+      
     } catch (error) {
-      console.error('Error al confirmar la transacción:', error);
-      setError('Error al confirmar la transacción: ' + error.message);
-      setStatus('Error al confirmar la transacción');
+      console.error('El usuario cancelo la compra:', error);
+      setError('El usuario cancelo la compra');
     }
   };
 
@@ -58,31 +66,47 @@ const Commit = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-6 bg-white shadow-lg rounded-lg">
         <h1 className="text-4xl font-bold mb-6 text-center">Confirmar Transacción</h1>
-        {token ? (
+        {!token ? (
           <div className="text-center">
+            <p className="text-red-500">No se encontró un token válido. Por favor, inicie una nueva transacción.</p>
             <button
-              className="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
-              onClick={handleCommit}
+              className="mt-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+              onClick={() => window.location.href = '/'}
             >
-              Confirmar Transacción
+              Volver al Inicio
             </button>
-            {status && <p className="mt-4 text-gray-700">{status}</p>}
           </div>
         ) : (
-          <p className="text-red-500 text-center">No se encontró un buyOrder válido. Por favor, inicie una nueva transacción.</p>
+          <>
+            {buttonVisible && (
+              <div className="text-center">
+                <button
+                  className="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+                  onClick={handleCommit}
+                >
+                  Confirmar Transacción
+                </button>
+              </div>
+            )}
+            {showMessage && (
+              <div className="text-center">
+                <p className="text-green-500 mt-4">Esto se verá una sola vez.</p>
+              </div>
+            )}
+          </>
         )}
         {error && (
-        <div className="mt-4 text-center">
-          <p className="text-red-500">{error}</p>
-          <button
-            className="mt-4 bg-red-500 text-white font-semibold py-2 px-6 rounded hover:bg-red-600 transition-colors"
-            onClick={() => window.location.href = '/'}
-          >
-            Volver al Inicio
-          </button>
-        </div>
+          <div className="mt-4 text-center">
+            <p className="text-red-500">{error}</p>
+            <button
+              className="mt-4 bg-red-500 text-white font-semibold py-2 px-6 rounded hover:bg-red-600 transition-colors"
+              onClick={() => window.location.href = '/'}
+            >
+              Volver al Inicio
+            </button>
+          </div>
         )}
-        {commitData && (
+        {commitData && token && (
           <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-md">
             {commitData.viewData.commitResponse && (
               <div className="mb-4 text-center">
@@ -119,6 +143,12 @@ const Commit = () => {
                     ))}
                   </tbody>
                 </table>
+              </div>
+              <div className="mt-4 text-center">
+                <button className="mt-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
+                        onClick={() => window.location.href = '/'} >
+                  Volver al Inicio
+                </button>
               </div>
             </div>
           </div>

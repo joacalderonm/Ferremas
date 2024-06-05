@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { useCart } from '../CartContext';

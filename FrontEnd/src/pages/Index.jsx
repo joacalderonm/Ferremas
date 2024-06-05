@@ -9,11 +9,12 @@ function Index() {
     <div>
       <Slider />
 
-      <div class="flex justify-center mt-8">
-  <h3 class="text-2xl font-bold">Ofertas en Ferremass</h3>
+      <div className="mx-auto lg:w-3/4 xl:w-2/3 px-4 mt-5">
+  <h3 className="text-center text-4xl font-bold mb-5">Ofertas de la semana en Ferremas</h3>
+  <Oferta />
 
 </div>
-  <Oferta/>
+  
     </div>
   );
 }
