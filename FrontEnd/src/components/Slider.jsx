@@ -14,10 +14,10 @@ const ImageCarousel = () => {
   };
 
   return (
-    <div className="relative w-full h-96">
+    <div className="relative w-full ">
   
         {images.map((image, index) => (
-          <div key={index} className="relative h-96">
+          <div key={index} className="relative h-full">
             <img 
               src={image} 
               alt={`Slide ${index}`} 
