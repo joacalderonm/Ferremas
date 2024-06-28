@@ -106,7 +106,11 @@ export class WebpayController {
             url,
         };
 
-        res.json(viewData);
+        res.json({
+            step: "Crear Transacción",
+            stepDescription: "En este paso se crea la transacción y se obtiene un token que será utilizado para redirigir al usuario a la página de pago.",
+            viewData
+        });
     } catch (error) {
         console.error('Error al crear la transacción:', error.message);
         res.status(500).json({ message: 'Error al crear la transacción', details: error.message });
@@ -116,90 +120,81 @@ export class WebpayController {
   // Función para confirmar la transacción en Webpay
   commit = asyncHandler(async (req, res, next) => {
     try {
-        console.log("================================================================================");
-        console.log(req.body);
-        console.log("================================================================================");
-
-        let params = req.method === "GET" ? req.query : req.body;
-
-        let token = params.token_ws;
-        let tbkToken = params.TBK_TOKEN;
-        let tbkOrdenCompra = params.TBK_ORDEN_COMPRA;
-        let tbkIdSesion = params.TBK_ID_SESION;
-
-        console.log("token: ", token, "tbkToken: ", tbkToken, "tbkOrdenCompra: ", tbkOrdenCompra, "tbkIdSesion: ", tbkIdSesion)
-
-        let step = null;
-        let stepDescription = null;
-        let viewData = {
-            token,
-            tbkToken,
-            tbkOrdenCompra,
-            tbkIdSesion,
+      console.log("================================================================================");
+      console.log(req.body);
+      console.log("================================================================================");
+  
+      let params = req.method === "GET" ? req.query : req.body;
+  
+      let token = params.token_ws;
+      let tbkToken = params.TBK_TOKEN;
+      let tbkOrdenCompra = params.TBK_ORDEN_COMPRA;
+      let tbkIdSesion = params.TBK_ID_SESION;
+  
+      console.log("token: ", token, "tbkToken: ", tbkToken, "tbkOrdenCompra: ", tbkOrdenCompra, "tbkIdSesion: ", tbkIdSesion);
+  
+      let step = null;
+      let stepDescription = null;
+      let viewData = {
+        token,
+        tbkToken,
+        tbkOrdenCompra,
+        tbkIdSesion,
+      };
+  
+      if (token && !tbkToken) {
+        const commitResponse = await new WebpayPlus.Transaction().commit(token);
+        viewData = {
+          token,
+          commitResponse,
         };
-
-        if (token && !tbkToken) {
-          const commitResponse = await new WebpayPlus.Transaction().commit(token);
-          viewData = {
-            token,
-            commitResponse,
-          };
-          step = "Confirmar Transacción";
-          stepDescription =
-            "En este paso tenemos que confirmar la transacción con el objetivo de avisar a " +
-            "Transbank que hemos recibido la transacción ha sido recibida exitosamente. En caso de que " +
-            "no se confirme la transacción, ésta será regresada.";
-
-          if (commitResponse.status === 'AUTHORIZED') {
-            // Recuperar productoID y stock desde tu base de datos o contexto según sea necesario
-            const productos = await this.webpayModel.getVentaIdByToken( {token} );
-            console.log ("Productos recuperados: ", productos)
-              
-            // Actualizar el stock de los productos
-            for (const producto of productos) {
-              await this.webpayModel.updateStock({ stock: producto.cantidad, productoID: producto.productoID });
-              console.log ("Producto actualizado: ", producto.productoID, producto.cantidad)
-            }
+        step = "Confirmar Transacción";
+        stepDescription =
+          "En este paso tenemos que confirmar la transacción con el objetivo de avisar a " +
+          "Transbank que hemos recibido la transacción ha sido recibida exitosamente. En caso de que " +
+          "no se confirme la transacción, ésta será regresada.";
+  
+        if (commitResponse.status === 'AUTHORIZED') {
+          const productos = await this.webpayModel.getVentaIdByToken({ token });
+          console.log("Productos recuperados: ", productos);
+  
+          for (const producto of productos) {
+            await this.webpayModel.updateStock({ stock: producto.cantidad, productoID: producto.productoID });
+            console.log("Producto actualizado: ", producto.productoID, producto.cantidad);
           }
-
-           
-          // Obtener ventaID usando buy_order
+  
           const ventaID = await this.webpayModel.getVentaIdByBuyOrder(commitResponse.buy_order);
-
-          // Actualizar el estado de la venta
+  
           await this.webpayModel.updateEstadoVenta({
             estado: commitResponse.status,
             ventaID: ventaID
           });
-
+  
           res.json({ step, stepDescription, viewData });
           return;
-        } else if (!token && !tbkToken) {
-          step = "El pago fue anulado por tiempo de espera.";
-          stepDescription =
-            "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
-        } else if (!token && tbkToken) {
-          step = "El pago fue anulado por el usuario.";
-          stepDescription =
-            "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
-        } else if (token && tbkToken) {
-          step = "El pago es inválido.";
-          stepDescription =
-            "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
         }
-        // Obtener ventaID usando buy_order
-        const ventaID = await this.webpayModel.getVentaIdByBuyOrder(commitResponse.buy_order);
-
-        // Actualizar el estado de la venta
-        await this.webpayModel.updateEstadoVenta({
-          estado: commitResponse.status,
-          ventaID: ventaID
-        });
-
-        res.json({ step, stepDescription, viewData });
+      } else if (!token && !tbkToken) {
+        step = "El pago fue anulado por tiempo de espera.";
+        stepDescription = "En este paso luego de anulación por tiempo de espera (+10 minutos) no es necesario realizar la confirmación ";
+      } else if (!token && tbkToken) {
+        step = "El pago fue anulado por el usuario.";
+        stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+      } else if (token && tbkToken) {
+        step = "El pago es inválido.";
+        stepDescription = "En este paso luego de abandonar el formulario no es necesario realizar la confirmación ";
+      }
+  
+      const ventaID = await this.webpayModel.getVentaIdByBuyOrder(commitResponse.buy_order);
+  
+      await this.webpayModel.updateEstadoVenta({
+        estado: commitResponse.status,
+        ventaID: ventaID
+      });
+  
+      res.json({ step, stepDescription, viewData });
     } catch (error) {
-        console.error('Error en commit:', error);
-        res.status(500).json({ message: 'Error al confirmar la transacción', details: error.message });
+      console.error('Error en commit:', error);
+      res.status(500).json({ message: 'Error al confirmar la transacción', details: error.message });
     }
   });
 

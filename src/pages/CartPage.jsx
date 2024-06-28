@@ -3,7 +3,6 @@ import { useCart } from '../components/CartContext';
 import { fetchCarrito, fetchCreate } from '../api/apiWebpayPlus';
 import "../css/Styles.css";
 
-
 const CartPage = () => {
     const { cart, dispatch } = useCart();
     const [deliveryOption, setDeliveryOption] = useState('retiro');
@@ -63,16 +62,16 @@ const CartPage = () => {
             const dataCreate = await fetchCreate(dataOrder);
             setTransaccion(dataCreate);
 
-            localStorage.setItem('webpayToken', dataCreate.token);
+            localStorage.setItem('webpayToken', dataCreate.viewData.token);
 
             const form = document.createElement('form');
-            form.action = dataCreate.url;
+            form.action = dataCreate.viewData.url;
             form.method = 'POST';
 
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = 'token_ws';
-            input.value = dataCreate.token;
+            input.value = dataCreate.viewData.token;
             form.appendChild(input);
 
             document.body.appendChild(form);
@@ -159,8 +158,8 @@ const CartPage = () => {
                     </div>
                     {transaccion && (
                         <div className="mt-4">
-                            <form id="webpay-form" action={transaccion.url} method='POST'>
-                                <input type="hidden" name='token_ws' value={transaccion.token} />
+                            <form id="webpay-form" action={transaccion.viewData.url} method='POST'>
+                                <input type="hidden" name='token_ws' value={transaccion.viewData.token} />
                             </form>
                         </div>
                     )}

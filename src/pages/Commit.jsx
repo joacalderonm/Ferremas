@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchCommitPost } from '../api/apiWebpayPlus';
 import { fetchVentaDetalleGetByID } from '../api/apiVentaDetalle';
 import { useCart } from '../components/CartContext';
 
 const Commit = () => {
   const { dispatch } = useCart();
+  const navigate = useNavigate();  // Hook para la navegación
   const [commitData, setCommitData] = useState(null);
   const [error, setError] = useState(null);
   const [token, setToken] = useState('');
@@ -27,6 +29,7 @@ const Commit = () => {
   useEffect(() => {
     const obtenerCarrito = async () => {
       if (commitData && commitData.viewData && commitData.viewData.commitResponse && commitData.viewData.commitResponse.buy_order) {
+        
         try {
           const ventaDetalleData = await fetchVentaDetalleGetByID(commitData.viewData.commitResponse.buy_order);
           console.log('Carrito:', ventaDetalleData);
@@ -52,16 +55,20 @@ const Commit = () => {
       dispatch({ type: 'CLEAR_CART' });
 
       // Eliminar el token de localStorage después de confirmar la transacción
-      localStorage.removeItem('webpayToken');
+      //localStorage.removeItem('webpayToken');
       setToken(null);
 
-      // Ocultar el botón y mostrar el mensaje
-      setButtonVisible(false);
-      setShowMessage(true);
-      
+      // Redirigir en función del resultado del commit
+      if (commitData.viewData.commitResponse.status == "AUTHORIZED") {
+        navigate('/commit'); // Redirige a la página de éxito
+      } else {
+        navigate('/commit_error'); // Redirige a la página de error
+      }
+
     } catch (error) {
       console.error('El usuario cancelo la compra:', error);
       setError('El usuario cancelo la compra');
+      navigate('/commit_error'); // Redirige a la página de error en caso de excepción
     }
   };
 
@@ -74,7 +81,7 @@ const Commit = () => {
             <p className="text-red-500">Error: El sistema no está disponible.</p>
             <button
               className="mt-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
-              onClick={() => window.location.href = '/'}
+              onClick={() => navigate('/')}  // Navegar al inicio
             >
               Volver al Inicio
             </button>
@@ -134,7 +141,7 @@ const Commit = () => {
                       </div>
                       <div className="mt-4 text-center">
                         <button className="mt-4 bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600 transition-colors"
-                                onClick={() => window.location.href = '/'} >
+                                onClick={() => navigate('/')} >
                           Volver al Inicio
                         </button>
                       </div>
@@ -150,7 +157,7 @@ const Commit = () => {
             <p className="text-red-500">{error}</p>
             <button
               className="mt-4 bg-red-500 text-white font-semibold py-2 px-6 rounded hover:bg-red-600 transition-colors"
-              onClick={() => window.location.href = '/'}
+              onClick={() => navigate('/')}
             >
               Volver al Inicio
             </button>

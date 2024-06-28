@@ -9,6 +9,7 @@ import Prueba from './pages/prueba';
 import Commit from './pages/Commit';
 import CartPage from './pages/CartPage';
 import { CartProvider } from './components/CartContext';
+import CommitError from './pages/CommitError';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/carrito" element={<CartPage />} />
           <Route path="/prueba" element={ <Prueba /> } />
           <Route path='/commit' element={ <Commit /> } />
+          <Route path="/commit_error" element={<CommitError />} />
             {/* Más rutas según sea necesario */}
         </Routes>
       </Layout>
