@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchRandomProductos } from '../api/apiProducto'; // Importa la nueva función
 import ProductoCard from './ProductoCard'; // Componente para mostrar cada producto
 

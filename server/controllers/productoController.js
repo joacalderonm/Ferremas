@@ -7,9 +7,12 @@ export class ProductoController {
     }
 
     getAll = async (req, res) => {
-        const {nombre} = req.query
-        const productos = await this.productoModel.getAll({ nombre })
-        res.json(productos)
+        try {
+            const productos = await this.productoModel.getAll();
+            res.json(productos);
+        } catch (error) {
+            res.status(500).json({ message: 'Error al obtener los productos', error: error.message });
+        }
     }
 
     getById = async (req, res) => {

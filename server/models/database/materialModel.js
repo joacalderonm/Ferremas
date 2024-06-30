@@ -5,10 +5,10 @@ export class MaterialModel {
     static async getAll() {
         const connection = await createConnection();
         try {
-            const [materiales] = await connection.query(
+            const [result] = await connection.query(
                 'CALL getAllMateriales();'
             );
-            return materiales[0];
+            return result[0];
         } finally {
             await connection.end();
         }
@@ -17,10 +17,11 @@ export class MaterialModel {
     static async getById({ id }) {  
         const connection = await createConnection();
         try {
-            const [materiales] = await connection.query(
-                'SELECT * FROM material WHERE materialID = ?;',
+            const [result] = await connection.query(
+                'CALL GetByIDMaterial(?);',
                 [id]
             );
+            const materiales = result[0];
             return materiales.length > 0 ? materiales[0] : null;
         } finally {
             await connection.end();

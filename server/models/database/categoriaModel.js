@@ -2,6 +2,9 @@ import { createConnection } from '../config.js';
 
 export class CategoriaModel {
 
+
+    // GET
+
     static async getAll() {
         const connection = await createConnection();
         try {
@@ -17,10 +20,11 @@ export class CategoriaModel {
     static async getById ({ id }) {
         const connection = await createConnection();
         try {
-            const [categorias] = await connection.query(
-                'SELECT * FROM categoria WHERE categoriaID = ?;',
+            const [result] = await connection.query(
+                'CALL GetByIDCategoria(?);',
                 [id]
             );
+            const categorias = result[0];  
             return categorias.length > 0 ? categorias[0] : null;
         } finally {
             await connection.end();
@@ -30,31 +34,35 @@ export class CategoriaModel {
     static async getByName ({ nombre }) {
         const connection = await createConnection();
         try {
-            const [categorias] = await connection.query(
-                'SELECT * FROM categoria WHERE nombre = ?;',
+            const [result] = await connection.query(
+                'CALL GetByNombreCategoria(?);',
                 [nombre]
             );
+            const categorias = result[0];
             return categorias.length > 0 ? categorias[0] : null;
         } finally {
             await connection.end();
         }
     }
 
+    // INSERT
+
     static async create ({ input }) {
         const { nombre, descripcion } = input;
         const connection = await createConnection();
         try {
             await connection.query(
-                `INSERT INTO categoria (nombre, descripcion) VALUES (?,?);`,
+                `CALL InsertCategoria(?,?);`,
                 [nombre, descripcion]
             );
-            console.log(result);
         } catch (error) {
             console.error('Error inserting data:', error);
         } finally {
             await connection.end();
         }
     }
+
+    // DELETE
 
     static async delete ({ id }) {
         const connection = await createConnection();
@@ -70,6 +78,8 @@ export class CategoriaModel {
         }
     }
 
+
+    // UPDATE
 
     static async update({ id, input }) {
         const { nombre, descripcion } = input;

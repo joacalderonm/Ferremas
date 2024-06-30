@@ -65,7 +65,7 @@ export class WebpayController {
     }
   });
 
-  getToken = asyncHandler(async (req, res, next) => {
+  getToken = asyncHandler(async (req, res) => {
     try {
       const { input } = req.params;
       const token = await this.webpayModel.getToken({ buyOrder: input });
@@ -76,7 +76,7 @@ export class WebpayController {
     }
   });
 
-  create = asyncHandler(async (req, res, next) => {
+  create = asyncHandler(async (req, res) => {
     const { buyOrder, sessionId, amount } = req.query;
     const returnUrl = "http://localhost:5173/commit";
 
@@ -118,7 +118,7 @@ export class WebpayController {
   });
 
   // Función para confirmar la transacción en Webpay
-  commit = asyncHandler(async (req, res, next) => {
+  commit = asyncHandler(async (req, res) => {
     try {
       console.log("================================================================================");
       console.log(req.body);
@@ -198,7 +198,7 @@ export class WebpayController {
     }
   });
 
-  status = asyncHandler(async (req, res, next) => {
+  status = asyncHandler(async (req, res) => {
     let token = req.body.token;
     
     const statusResponse = await new WebpayPlus.Transaction().status(token);
@@ -211,7 +211,7 @@ export class WebpayController {
     res.json({ step: "Estado de Transacción", stepDescription: "Puedes solicitar el estado de una transacción hasta 7 días después de que haya sido realizada. No hay limite de solicitudes de este tipo, sin embargo, una vez pasados los 7 días ya no podrás revisar su estado.", viewData });
   });
 
-  refund = asyncHandler(async (req, res, next) => {
+  refund = asyncHandler(async (req, res) => {
     let { token, amount } = req.body;
     
     const refundResponse = await new WebpayPlus.Transaction().refund(

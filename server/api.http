@@ -28,7 +28,7 @@ PATCH http://localhost:1234/categoria/3
 Content-Type: application/json
 
 {
-    "descripcion": "dasd",
+    "descripcion": "Materiales de Construcción",
     "precio": 100
 }
 
@@ -42,7 +42,7 @@ POST http://localhost:1234/categoria
 Content-Type: application/json
 
 {
-    "nombre": "ferremas",
+    "nombre": "Materiales de Construcción",
     "descripcion": ""
 }
 
@@ -54,7 +54,7 @@ PATCH http://localhost:1234/categoria/2
 Content-Type: application/json
 
 {
-    "nombre": "Hogar",
+    "nombre": "Materiales de Construcción",
     "descripcion": ""
 }
 
