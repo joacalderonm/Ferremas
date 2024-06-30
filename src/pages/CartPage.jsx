@@ -8,6 +8,7 @@ const CartPage = () => {
     const [deliveryOption, setDeliveryOption] = useState('retiro');
     const [confirmPurchase, setConfirmPurchase] = useState(false);
     const [transaccion, setTransaccion] = useState(null);
+    const [isProcessing, setIsProcessing] = useState(false);
 
     const handleRemoveFromCart = (productoID) => {
         dispatch({ type: 'REMOVE_FROM_CART', id: productoID });
@@ -36,6 +37,9 @@ const CartPage = () => {
     };
 
     const handleConfirmPurchase = async () => {
+        if (isProcessing) return; // Evitar múltiples clics
+        setIsProcessing(true);
+
         const carritoData = {
             clienteID: 1,
             productos: cart.map(item => ({
@@ -78,6 +82,8 @@ const CartPage = () => {
             form.submit();
         } catch (error) {
             console.error('Error al confirmar la compra:', error);
+        } finally {
+            setIsProcessing(false);
         }
     };
 
@@ -167,9 +173,9 @@ const CartPage = () => {
                         <button
                             className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
                             onClick={handleConfirmPurchase}
-                            disabled={confirmPurchase}
+                            disabled={confirmPurchase || isProcessing}
                         >
-                            Confirmar Compra
+                            {isProcessing ? 'Procesando...' : 'Confirmar Compra'}
                         </button>
                     </div>
                 </div>

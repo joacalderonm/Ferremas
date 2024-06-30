@@ -6,9 +6,9 @@ export class MaterialModel {
         const connection = await createConnection();
         try {
             const [materiales] = await connection.query(
-                'SELECT * FROM material;'
+                'CALL getAllMateriales();'
             );
-            return materiales;
+            return materiales[0];
         } finally {
             await connection.end();
         }

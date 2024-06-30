@@ -6,9 +6,9 @@ export class CategoriaModel {
         const connection = await createConnection();
         try {
             const [categorias] = await connection.query(
-                'SELECT * FROM categoria;'
+                'CALL getAllCategoria();'
             );
-            return categorias;
+            return categorias[0];
         } finally {
             await connection.end();
         }

@@ -103,7 +103,7 @@ export class webPayModel {
     static async updatePagoToken (input) {
         const { token, buyOrder } = input;
         const connection = await createConnection();
-
+        
         try {
             await connection.query(
                 'UPDATE pago SET token = ? WHERE buyOrder = ?',

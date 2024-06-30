@@ -44,10 +44,10 @@ const Producto = ({ categoria, productos, marcas, materiales }) => {
                 <div className="mt-4">
                   <button
                     className={`w-full py-2 px-4 rounded ${
-                      producto.stock === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
+                      producto.stock <= 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-700 text-white'
                     } font-semibold`}
                     onClick={() => handleAddToCart(producto)}
-                    disabled={producto.stock === 0}
+                    disabled={producto.stock <= 0}
                   >
                     Añadir al Carrito
                   </button>
