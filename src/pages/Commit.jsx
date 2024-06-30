@@ -18,9 +18,9 @@ const Commit = () => {
     if (storedToken) {
       setToken(storedToken);
     } else {
-      setToken(null);
+      navigate('/commit_error');
     }
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const handleCommit = async () => {
