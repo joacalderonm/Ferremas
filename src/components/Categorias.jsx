@@ -46,10 +46,10 @@ const Categorias = () => {
               <img
                 src={categoria.imagen}
                 alt={categoria.nombre}
-                className="w-full h-64 object-cover rounded-lg bg-black bg-opacity-50  shadow-md transform   group-hover:scale-80"
+                className="w-full h-64 object-cover rounded-lg bg-black bg-opacity-10  shadow-md transform   group-hover:scale-80"
               />
               <div className=" absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center opacity-100 group-hover:opacity-100 transition-opacity">
-              <h3 className="w-full bg-red-600 p-2 text-white text-lg font-bold">{categoria.nombre}</h3>
+              <h3 className="w-full text-center bg-red-600 p-2 text-white text-lg font-bold">{categoria.nombre}</h3>
               </div>
             </div>
           ))}
