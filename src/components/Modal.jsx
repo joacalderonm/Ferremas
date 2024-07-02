@@ -38,7 +38,11 @@ const Modal = ({ producto, closeModal, marcas, materiales }) => {
         <hr className="mt-2 mb-4 border-gray-300" />
         <p className="mt-2 text-gray-600"><span className="font-bold">Material:</span> {material ? material.nombre : 'Desconocido'}</p>
         <hr className="mt-2 mb-4 border-gray-300" />
-        <p className="mt-4 text-green-600"><span className="font-bold">Stock:</span> {producto.stock}</p>
+        {producto.stock <= 0 ? ( 
+          <p className="mt-4 text-red-600"><span className="font-bold">Producto Sin Stock</span></p>
+        ) : (
+          <p className="mt-4 text-green-600"><span className="font-bold">Stock:</span> {producto.stock}</p>
+        )}
         <hr className="mt-2 mb-4 border-gray-300" />
         <div className="flex flex-col items-start mt-4">
           <div className="flex items-center mb-2">

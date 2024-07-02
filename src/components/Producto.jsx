@@ -26,7 +26,7 @@ const Producto = ({ categoria, productos, marcas, materiales }) => {
     <div className="">
       <h2 className=" text-2xl font-bold text-center mb-10">{categoria.nombre}</h2>
       <h3 className="text-xl font-semibold mb-4">Productos</h3>
-      <div className="bg-white  grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-2 gap-1">
+      <div className="bg-white  grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-1">
         {sortedProductos.length > 0 ? (
           sortedProductos.map((producto) => (
             <div key={producto.productoID} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
@@ -38,8 +38,8 @@ const Producto = ({ categoria, productos, marcas, materiales }) => {
                 <p className="text-gray-700 mt-1 flex-grow">{producto.descripcion}</p>
                 <div className="mt-1">
                   <p className="text-black-600 font-bold">Precio: {producto.precio_formateado}</p>
-                  {producto.stock === 0 ? (
-                    <p className="text-red-600 mt-2">Producto sin stock</p>
+                  {producto.stock <= 0 ? (
+                    <p className="text-red-600 mt-2 font-bold">Producto sin stock</p>
                   ) : (
                     <p className="text-black-600 font-bold mt-2">Stock: {producto.stock}</p>
                   )}
