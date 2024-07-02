@@ -71,7 +71,7 @@ const Commit = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-6 bg-white shadow-lg rounded-lg">
-        <h1 className="text-4xl font-bold mb-6 text-center">Confirmar Transacción</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center">Orden de compra</h1>
         {showMessage && commitData && (
           <div className="text-center mt-4">
             <Boleta commitData={commitData} detalleVenta={detalleVenta} />
