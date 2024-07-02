@@ -10,12 +10,13 @@ export class webPayModel {
         try {
             await connection.beginTransaction();
 
-            const [result] = await connection.query(
-                'INSERT INTO venta (fecha, clienteID, estado) VALUES (?, ?, ?)',
+            await connection.query(
+                'CALL InsertVenta(?, ?, ?, @ventaID)',
                 [fecha, clienteID, estado]
             );
 
-            ventaID = result.insertId;
+            const [[{ ventaID: insertedVentaID }]] = await connection.query('SELECT @ventaID AS ventaID');
+            ventaID = insertedVentaID;
 
             await connection.commit();
         } catch (error) {
@@ -35,7 +36,7 @@ export class webPayModel {
 
         try {
             await connection.query(
-                'INSERT INTO detalle_venta (ventaID, productoID, cantidad, precio) VALUES (?, ?, ?, ?)',
+                'CALL InsertDetalleVenta(?, ?, ?, ?)',
                 [ventaID, productoID, cantidad, precio]
             );
         } catch (error) {
@@ -46,13 +47,29 @@ export class webPayModel {
         }
     }
 
+    static async calcularTotalVenta(ventaID) {
+        const connection = await createConnection();
+        try {
+            const [rows] = await connection.query(
+                'SELECT CalcularTotalVenta(?) AS total',
+                [ventaID]
+            );
+            return rows[0].total;
+        } catch (error) {
+            console.error('Error al calcular el total de la venta:', error.message);
+            throw new Error('Error al calcular el total de la venta: ' + error.message);
+        } finally {
+            await connection.end();
+        }
+    }
+    
     static async createPago(input) {
         const { ventaID, buyOrder, sessionId, fecha = new Date(), amount, metodoPagoID, estadoPago, token } = input;
         const connection = await createConnection();
 
         try {
             await connection.query(
-                'INSERT INTO pago (VentaID, buyOrder, sessionId, fecha, amount, metodoPagoID, estadoPago, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                'CALL InsertPago(?, ?, ?, ?, ?, ?, ?, ?)',
                 [ventaID, buyOrder, sessionId, fecha, amount, metodoPagoID, estadoPago, token]
             );
         } catch (error) {
@@ -63,18 +80,18 @@ export class webPayModel {
         }
     }
 
-    static async getVentaIdByBuyOrder (buyOrder) {
+    static async getVentaIdByBuyOrder(buyOrder) {
         const connection = await createConnection();
+        let ventaID;
         try {
-            const [result] = await connection.query(
-                'SELECT v.ventaID FROM venta v INNER JOIN pago p ON v.ventaID = p.ventaID WHERE p.buyOrder = ?',
+            await connection.query(
+                'CALL GetVentaIdByBuyOrder(?, @ventaID)',
                 [buyOrder]
             );
-            if (result.length > 0) {
-                return result[0].ventaID;
-            } else {
-                throw new Error('Venta no encontrada para la orden de compra proporcionada.');
-            }
+            const [[{ ventaID: p_ventaID }]] = await connection.query('SELECT @ventaID AS ventaID');
+            ventaID = p_ventaID;
+            console.log('VentaID:', ventaID);
+            return ventaID;
         } catch (error) {
             console.error('Error al obtener el ID de la venta por la orden de compra:', error.message);
             throw new Error('Error al obtener el ID de la venta por la orden de compra: ' + error.message);
@@ -83,13 +100,13 @@ export class webPayModel {
         }
     }
 
-    static async updateEstadoVenta (input) {
+    static async updateEstadoVenta(input) {
         const { estado, ventaID } = input;
         const connection = await createConnection();
 
         try {
             await connection.query(
-                'UPDATE venta SET estado = ? WHERE ventaID = ?',
+                'CALL UpdateEstadoVenta(?, ?)',
                 [estado, ventaID]
             );
         } catch (error) {
@@ -106,7 +123,7 @@ export class webPayModel {
         
         try {
             await connection.query(
-                'UPDATE pago SET token = ? WHERE buyOrder = ?',
+                'CALL UpdatePagoToken(?, ?)',
                 [token, buyOrder]
             );
         } catch (error) {
@@ -117,17 +134,18 @@ export class webPayModel {
         }
     }
 
-    static async getToken (input) {
+    static async getToken(input) {
         const { buyOrder } = input;
         const connection = await createConnection();
 
         try {
-            const [rows] = await connection.query(
-                'SELECT token FROM pago WHERE buyOrder = ?',
+            await connection.query(
+                'CALL GetTokenByBuyOrder(?, @token)',
                 [buyOrder]
             );
-            if (rows.length > 0) {
-                return rows[0].token;
+            const [[{ p_token }]] = await connection.query('SELECT @token AS token');
+            if (p_token) {
+                return p_token;
             } else {
                 throw new Error('Token no encontrado para la orden de compra proporcionada.');
             }
@@ -139,46 +157,31 @@ export class webPayModel {
         }
     }
 
-    static async calcularTotalVenta(ventaID) {
-        const connection = await createConnection();
-        try {
-            const [rows] = await connection.query(
-                'SELECT SUM(cantidad * precio) AS total FROM detalle_venta WHERE ventaID = ?',
-                [ventaID]
-            );
-            return rows[0].total;
-        } catch (error) {
-            console.error('Error al calcular el total de la venta:', error.message);
-            throw new Error('Error al calcular el total de la venta: ' + error.message);
-        } finally {
-            await connection.end();
-        }
-    }
-
     static async getVentaIdByToken({ token }) {
         const connection = await createConnection();
         try {
-            const [productos] = await connection.query(
-                `SELECT dv.productoID as "productoID", dv.cantidad as "cantidad"
-                FROM detalle_venta dv 
-                INNER JOIN pago p ON dv.ventaID = p.ventaID
-                WHERE p.token = ?;`,
+            const [results] = await connection.query(
+                `CALL getVentaIdByToken(?);`,
                 [token]
             );
-
+            const productos = results[0];
             return productos;
         } finally {
             await connection.end();
         }
     }
+    
 
-    static async updateStock ({ stock, productoID }) {
+    static async updateStock({ stock, productoID }) {
         const connection = await createConnection();
         try {
             await connection.query(
-                'UPDATE producto SET stock = stock - ? WHERE productoID = ?;',
+                'CALL UpdateProductoStock(?, ?)',
                 [stock, productoID]
             );
+        } catch (error) {
+            console.error('Error al actualizar el stock del producto:', error.message);
+            throw new Error('Error al actualizar el stock del producto: ' + error.message);
         } finally {
             await connection.end();
         }
