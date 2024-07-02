@@ -28,12 +28,17 @@ export const Header = () => {
     };
   }, []);
 
+  // Calcula el total de productos en el carrito
+  const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       <header className="header flex flex-col md:flex-row items-center justify-between p-4 bg-gray-900 text-white relative">
         <div className="flex items-center w-full md:w-auto justify-between">
           <div className="logo flex items-center">
-          <Link to="/">   <img className='img-header w-10 h-10 mr-2' src={logo} alt='logo' /></Link>
+            <Link to="/">   
+              <img className='img-header w-10 h-10 mr-2' src={logo} alt='logo' />
+            </Link>
             <span className="font-bold uppercase">FerreMas</span>
           </div>
 
@@ -41,9 +46,9 @@ export const Header = () => {
             <Link to="/carrito" className="flex items-center">
               <ShoppingBagIcon className="h-5 w-5 text-white" />
               <span className="ml-2">Ver Carrito</span>
-              {cart.length > 0 && (
+              {totalItemsInCart > 0 && (
                 <span className="ml-2 bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center">
-                  {cart.length}
+                  {totalItemsInCart}
                 </span>
               )}
             </Link>
@@ -56,26 +61,27 @@ export const Header = () => {
             <Link to="/categoria" className="select py-2 px-4 font-bold text-left text-black md:text-left md:py-0">Categorías</Link>
             <Link to="/nosotros" className="select py-2 px-4 font-bold text-left text-black md:text-left md:py-0">Nosotros</Link>
           </div>
-
-         
         </div>
+        <div className="buscador1 hidden md:flex items-center mb-4 md:mb-0"></div>
+        
+        <div className="flex menu items-center justify-between w-full md:w-auto mt-2 md:mt-3">
 
-        <div className="flex menu items-center  w-full md:w-auto mt-2 md:mt-3">
           <button className="menu-button text-white md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? 'X' : '☰'}
           </button>
-          
-        </div><div className="carrito flex items-center bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">
-            <Link to="/carrito" className="flex items-center">
-              <ShoppingBagIcon className="h-5 w-5 text-white" />
-              <span className="ml-2">Ver Carrito</span>
-              {cart.length > 0 && (
-                <span className="ml-2 bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center">
-                  {cart.length}
-                </span>
-              )}
-            </Link>
-          </div>
+        </div>
+        
+        <div className="carrito flex items-center bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded">
+          <Link to="/carrito" className="flex items-center">
+            <ShoppingBagIcon className="h-5 w-5 text-white" />
+            <span className="ml-2">Ver Carrito</span>
+            {totalItemsInCart > 0 && (
+              <span className="ml-2 bg-white text-red-500 rounded-full w-5 h-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
+          </Link>
+        </div>
       </header>
     </>
   );
