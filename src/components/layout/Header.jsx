@@ -33,7 +33,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="header flex flex-col md:flex-row items-center justify-between p-4 bg-gray-800 text-white relative">
+      <header className="header flex flex-col md:flex-row items-center justify-between p-4 bg-gray-900 text-white relative">
         <div className="flex items-center w-full md:w-auto justify-between">
           <div className="logo flex items-center">
             <Link to="/">   
@@ -55,17 +55,17 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between w-full md:w-auto">
-          <div className={`menu flex-col md:flex-row flex w-full md:items-center md:static absolute top-full left-0 md:top-auto md:left-auto bg-gray-600 md:bg-transparent shadow-lg md:shadow-none z-10 md:z-auto ${isMenuOpen ? 'flex' : 'hidden'}`}>
-            <Link to="/" className="select py-2 px-4 text-left text-white md:text-left md:py-0">Inicio</Link>
-            <Link to="/categoria" className="select py-2 px-4 text-left text-black md:text-left md:py-0">Categorías</Link>
-            <Link to="/nosotros" className="select py-2 px-4 text-left text-black md:text-left md:py-0">Nosotros</Link>
+        <div className="flex  justify-between w-full md:w-auto">
+          <div className={`menu flex-col md:flex-row flex w-full md:items-center md:static absolute top-full left-0 md:top-auto md:left-auto bg-gray-700 md:bg-transparent shadow-lg md:shadow-none z-10 md:z-auto ${isMenuOpen ? 'flex' : 'hidden'}`}>
+            <Link to="/" className="select py-2 px-4 text-left font-bold text-white md:text-left md:py-0">Inicio</Link>
+            <Link to="/categoria" className="select py-2 px-4 font-bold text-left text-black md:text-left md:py-0">Categorías</Link>
+            <Link to="/nosotros" className="select py-2 px-4 font-bold text-left text-black md:text-left md:py-0">Nosotros</Link>
           </div>
         </div>
-
         <div className="buscador1 hidden md:flex items-center mb-4 md:mb-0"></div>
         
         <div className="flex menu items-center justify-between w-full md:w-auto mt-2 md:mt-3">
+
           <button className="menu-button text-white md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? 'X' : '☰'}
           </button>
