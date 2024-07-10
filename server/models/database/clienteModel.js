@@ -2,12 +2,12 @@ import { createConnection } from "../config.js";
 
 export class ClienteModel {
 
-    static async getById({ id }) {
+    static async getById({ clienteID }) {
         const connection = await createConnection();
         try {
             const [result] = await connection.query(
                 `CALL GetByIdCliente (?) ; `,
-                [id]
+                [clienteID]
             );
             return result[0];
         } finally {

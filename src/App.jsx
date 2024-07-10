@@ -16,6 +16,7 @@ import PrivateRoute from './auth/PrivateRoute';
 import { Navigate } from 'react-router-dom';
 
 function App() {
+  
   return (
     <AuthProvider>
       <CartProvider>

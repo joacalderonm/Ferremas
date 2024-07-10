@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +16,7 @@ const LoginPage = () => {
 
     try {
       await login(username, password);
+      
       navigate('/'); // Redirigir a la página protegida después de iniciar sesión
     } catch (error) {
       if (error.response) {

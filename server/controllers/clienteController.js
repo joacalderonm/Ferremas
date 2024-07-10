@@ -33,22 +33,22 @@ export class ClienteController {
             }
 
             const token = jwt.sign(
-                { clienteID: existingUser.clienteID , username: existingUser.username}, 
-                JWT_SECRET, 
+                { clienteID: existingUser.clienteID, username: existingUser.username },
+                JWT_SECRET,
                 { expiresIn: '1h' }
-            );
-
-            res.cookie('access_token', token, { 
-                httpOnly: true, 
+              );
+              
+              res.cookie('access_token', token, {
+                httpOnly: true,
                 secure: process.env.NODE_ENV === 'production', // Asegúrate de que sea true en producción
                 sameSite: 'lax',
-                maxAge: 1000 * 60 * 60 
-            });
-
-            res.status(200).json({ 
+                maxAge: 1000 * 60 * 60
+              });
+              
+              res.status(200).json({
                 message: 'Inicio de sesión exitoso',
-                user: { id: existingUser.id, username: existingUser.username, email: existingUser.email }
-            });
+                user: { id: existingUser.clienteID, username: existingUser.username, email: existingUser.email }
+              });
         } catch (error) {
             console.error('Error during login:', error);
             res.status(500).json({ error: 'Error interno del servidor' });
@@ -110,11 +110,11 @@ export class ClienteController {
 
         try {
             const data = jwt.verify(token, JWT_SECRET);
-            const user = await this.clienteModel.getById({ id: data.clienteID });
+            const user = await this.clienteModel.getById({ clienteID: data.clienteID });
             if (!user) {
                 return res.status(404).json({ error: 'Usuario no encontrado' });
             }
-            res.status(200).json({ user: { id: user.id, username: user.username, email: user.email } });
+            res.status(200).json( {user, token});
         } catch {
             return res.status(401).json({ error: 'Invalid token' });
         }

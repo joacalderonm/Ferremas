@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import { useCart } from '../components/CartContext';
@@ -12,7 +12,7 @@ const CartPage = () => {
     const [deliveryOption, setDeliveryOption] = useState('retiro');
     const [confirmPurchase, setConfirmPurchase] = useState(false);
     const [transaccion, setTransaccion] = useState(null);
-    const [isProcessing, setIsProcessing] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);    
 
     const handleRemoveFromCart = (productoID) => {
         dispatch({ type: 'REMOVE_FROM_CART', id: productoID });
@@ -48,9 +48,9 @@ const CartPage = () => {
 
         if (isProcessing) return; // Evitar múltiples clics
         setIsProcessing(true);
-
+        
         const carritoData = {
-            clienteID: user.id,
+            clienteID: user.clienteID,
             productos: cart.map(item => ({
                 productoID: item.productoID,
                 cantidad: item.quantity,
@@ -61,7 +61,6 @@ const CartPage = () => {
 
         try {
             const response = await fetchCarrito(carritoData);
-            console.log('Compra confirmada:', response);
             setConfirmPurchase(true);
 
             const dataOrder = {
@@ -69,8 +68,6 @@ const CartPage = () => {
                 sessionId: response.sessionId,
                 amount: carritoData.total
             };
-
-            console.log(dataOrder);
 
             const dataCreate = await fetchCreate(dataOrder);
             setTransaccion(dataCreate);

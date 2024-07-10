@@ -2,10 +2,11 @@ import axios from "axios";
 
 const clientAPI = 'http://localhost:1234';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: clientAPI,
-  withCredentials: true, 
+  withCredentials: true, // Incluye las cookies en cada petición
 });
+
 
 export const loginCliente = async (username, contraseña) => {
   try {
