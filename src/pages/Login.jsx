@@ -16,7 +16,6 @@ const LoginPage = () => {
 
     try {
       await login(username, password);
-      
       navigate('/'); // Redirigir a la página protegida después de iniciar sesión
     } catch (error) {
       if (error.response) {

@@ -50,7 +50,7 @@ const CartPage = () => {
         setIsProcessing(true);
         
         const carritoData = {
-            clienteID: user.clienteID,
+            clienteID: user.id,
             productos: cart.map(item => ({
                 productoID: item.productoID,
                 cantidad: item.quantity,
