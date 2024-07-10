@@ -56,7 +56,6 @@ const Commit = () => {
       if (commitData && commitData.viewData && commitData.viewData.commitResponse && commitData.viewData.commitResponse.buy_order) {
         try {
           const ventaDetalleData = await fetchVentaDetalleGetByID(commitData.viewData.commitResponse.buy_order);
-          console.log('Carrito:', ventaDetalleData);
           setDetalleVenta(ventaDetalleData);
           
         } catch (error) {

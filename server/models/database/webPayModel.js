@@ -3,7 +3,7 @@ import { createConnection } from '../config.js';
 export class webPayModel {
     
     static async createVenta(venta) {
-        const { fecha = new Date(), clienteID = 1, estado = 'PENDIENTE' } = venta;
+        const { fecha = new Date(), clienteID , estado = 'PENDIENTE' } = venta;
         const connection = await createConnection();
         let ventaID;
 
@@ -90,7 +90,6 @@ export class webPayModel {
             );
             const [[{ ventaID: p_ventaID }]] = await connection.query('SELECT @ventaID AS ventaID');
             ventaID = p_ventaID;
-            console.log('VentaID:', ventaID);
             return ventaID;
         } catch (error) {
             console.error('Error al obtener el ID de la venta por la orden de compra:', error.message);

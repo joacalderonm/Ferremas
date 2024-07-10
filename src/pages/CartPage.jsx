@@ -1,42 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 import { useCart } from '../components/CartContext';
 import { fetchCarrito, fetchCreate } from '../api/apiWebpayPlus';
 import "../css/Styles.css";
 
 const CartPage = () => {
-    const { cart, dispatch, getStock } = useCart();
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const { cart, dispatch } = useCart();
     const [deliveryOption, setDeliveryOption] = useState('retiro');
     const [confirmPurchase, setConfirmPurchase] = useState(false);
     const [transaccion, setTransaccion] = useState(null);
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [stock, setStock] = useState({});
-
-    useEffect(() => {
-        const fetchStock = async () => {
-            try {
-                const stocks = await Promise.all(cart.map(item => getStock(item.productoID)));
-                const stockData = cart.reduce((acc, item, index) => {
-                    acc[item.productoID] = stocks[index];
-                    return acc;
-                }, {});
-                setStock(stockData);
-            } catch (error) {
-                console.error('Error al obtener el stock de productos:', error);
-            }
-        };
-
-        fetchStock();
-    }, [cart, getStock]);
+    const [isProcessing, setIsProcessing] = useState(false);    
 
     const handleRemoveFromCart = (productoID) => {
         dispatch({ type: 'REMOVE_FROM_CART', id: productoID });
     };
 
     const handleUpdateQuantity = (productoID, quantity) => {
-        if (quantity >= 0 && quantity <= (stock[productoID] || 0)) {
-            dispatch({ type: 'UPDATE_QUANTITY', id: productoID, quantity, product: { productoID, stock: stock[productoID] } });
-        } else {
-            alert('No hay suficiente stock disponible');
+        if (quantity >= 1) {
+            dispatch({ type: 'UPDATE_QUANTITY', id: productoID, quantity });
         }
     };
 
@@ -57,11 +41,16 @@ const CartPage = () => {
     };
 
     const handleConfirmPurchase = async () => {
+        if (!user) {
+            navigate('/login'); // Redirige al usuario a la página de inicio de sesión si no está autenticado
+            return;
+        }
+
         if (isProcessing) return; // Evitar múltiples clics
         setIsProcessing(true);
-
+        
         const carritoData = {
-            clienteID: 1,
+            clienteID: user.clienteID,
             productos: cart.map(item => ({
                 productoID: item.productoID,
                 cantidad: item.quantity,
@@ -72,7 +61,6 @@ const CartPage = () => {
 
         try {
             const response = await fetchCarrito(carritoData);
-            console.log('Compra confirmada:', response);
             setConfirmPurchase(true);
 
             const dataOrder = {
@@ -176,7 +164,7 @@ const CartPage = () => {
                     <div className="flex flex-col justify-between ml-0 md:ml-6 mt-2 md:mt-0 flex-grow text-center md:text-left">
                         Tarifa de Envío: ${deliveryOption === 'delivery' ? 10000 : 0}
                     </div>
-                    <div className="flex flex-col justify-between ml-0 md:ml-6 mt-2 md:mt-0 flex-grow text-center md:text-left">
+                    <div className="flex flex-col justify-between ml-0 md:ml-6 mt-2 md:mt-0 flex-grow text-center md:text-left    ">
                         Total: ${calculateTotalCart()}
                     </div>
                     {transaccion && (

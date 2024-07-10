@@ -3,6 +3,8 @@ import { useCart } from '../components/CartContext';
 import { useState } from 'react';
 import Modal from './Modal';
 import "../css/Styles.css";
+
+
 const Producto = ({ categoria, productos, marcas, materiales }) => {
   const { dispatch } = useCart();
   const [selectedProduct, setSelectedProduct] = useState(null);

@@ -2,11 +2,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { useCart } from '../CartContext';
+import { useAuth } from '../../auth/AuthContext';  // Importa el contexto de autenticación
 import logo from '../../assets/Logo.png';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart } = useCart();
+  const { user, logout } = useAuth();  // Obtén el estado de autenticación y la función de logout
   const location = useLocation();
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className="flex  justify-between w-full md:w-auto">
+        <div className="flex justify-between w-full md:w-auto">
           <div className={`menu flex-col md:flex-row flex w-full md:items-center md:static absolute top-full left-0 md:top-auto md:left-auto bg-gray-700 md:bg-transparent shadow-lg md:shadow-none z-10 md:z-auto ${isMenuOpen ? 'flex' : 'hidden'}`}>
             <Link to="/" className="select py-2 px-4 text-left font-bold text-white md:text-left md:py-0">Inicio</Link>
             <Link to="/categoria" className="select py-2 px-4 font-bold text-left text-black md:text-left md:py-0">Categorías</Link>
@@ -65,7 +67,6 @@ export const Header = () => {
         <div className="buscador1 hidden md:flex items-center mb-4 md:mb-0"></div>
         
         <div className="flex menu items-center justify-between w-full md:w-auto mt-2 md:mt-3">
-
           <button className="menu-button text-white md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? 'X' : '☰'}
           </button>
@@ -82,6 +83,24 @@ export const Header = () => {
             )}
           </Link>
         </div>
+        
+        {/* Mostrar botón de logout si el usuario está autenticado */}
+        {user ? (
+          <div className="flex items-center ml-4">
+            <button
+              onClick={logout}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center ml-4">
+            <Link to="/login" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+              Login
+            </Link>
+          </div>
+        )}
       </header>
     </>
   );
