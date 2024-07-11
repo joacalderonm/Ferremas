@@ -1,4 +1,4 @@
-import { Link, useLocation,useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { useCart } from '../CartContext';
@@ -7,11 +7,13 @@ import logo from '../../assets/Logo.png';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Estado para controlar la visibilidad del dropdown
   const { cart } = useCart();
   const { user, logout } = useAuth();  // Obtén el estado de autenticación y la función de logout
   const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     // Cierra el menú cuando se cambia de ruta
     setIsMenuOpen(false);
@@ -45,7 +47,7 @@ export const Header = () => {
       <header className="header flex flex-col md:flex-row items-center justify-between p-4 bg-gray-900 text-white relative">
         <div className="flex items-center w-full md:w-auto justify-between">
           <div className="logo flex items-center">
-            <Link to="/home">   
+            <Link to="/home">
               <img className='img-header w-10 h-10 mr-2' src={logo} alt='logo' />
             </Link>
             <span className="font-bold uppercase">FerreMas</span>
@@ -103,20 +105,24 @@ export const Header = () => {
           </Link>
         </div>
         
-        {/* Mostrar botón de logout si el usuario está autenticado */}
+        {/* Mostrar nombre de usuario si está autenticado */}
         {user ? (
-          <div className="flex items-center ml-4">
-            <button
-              onClick={logout}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Logout
-            </button>
+          <div className='relative'>
+          <div className='menusito cursor-pointer relative z-50' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+            <span className="text-white">{user.username}</span>
+            {isDropdownOpen && (
+              <div className="des absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
+                <Link to="/historial" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Mis Compras</Link>
+                <button onClick={logout} className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200">Salir</button>
+              </div>
+            )}
           </div>
+        </div>
+        
         ) : (
           <div className="flex items-center ml-4">
-            <Link to="/login" className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-              Login
+            <Link to="/login" className="">
+              Ingresar
             </Link>
           </div>
         )}

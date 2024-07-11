@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-
+import logo from '../assets/login.png'
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -29,7 +29,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex">
       <div className="w-1/2 relative">
         {/* Aquí deberías colocar la URL correcta para tu imagen */}
-        <img src="URL_DE_TU_IMAGEN" alt="Ferremas" className="w-full h-full object-cover"/>
+        <img src={logo} alt="Ferremas" className="w-full h-full object-cover"/>
         <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <h1 className="text-white text-5xl font-bold">FERREMAS</h1>
         </div>
