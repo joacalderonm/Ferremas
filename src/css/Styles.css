@@ -459,7 +459,7 @@
   }
   
   .bg-tools-pattern {
-    background-image: url('../assets/herramientas.jpg'); /* Ruta a la imagen del patrón de herramientas */
+    background-image: url('https://i.pinimg.com/736x/a0/02/43/a00243e8dd833b36a5fa32640213f8a0.jpg'); /* Ruta a la imagen del patrón de herramientas */
     background-size: 200px 200px;
     background-repeat: repeat;
   }
