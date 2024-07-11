@@ -56,4 +56,17 @@ export class ClienteModel {
             await connection.end();
         }
     }
+
+    static async GetByHistory  ({ clienteID }) {
+        const connection = await createConnection();
+        try {
+            const [result] = await connection.query(
+                `CALL GetByHistory (?);`,
+                [clienteID]
+            );
+            return result[0];
+        } finally {
+            await connection.end();
+        }
+    }
 }
