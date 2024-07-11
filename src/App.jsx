@@ -1,5 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './auth/AuthContext';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './auth/AuthContext';
 import Layout from './layout/Layout';
 import Index from './pages/Index';
 import Categoria from './pages/Categoria';
@@ -13,16 +13,14 @@ import CommitError from './pages/CommitError';
 import NotFound from './components/layout/NotFound';
 import LoginPage from './pages/Login';
 import PrivateRoute from './auth/PrivateRoute';
-import { Navigate } from 'react-router-dom';
 
 function App() {
-  
   return (
     <AuthProvider>
       <CartProvider>
         <Layout>
           <Routes>
-            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="/" element={<Index />} />
             <Route path="/home" element={<Index />} />
             <Route path="/categoria" element={<Categoria />} />
             <Route path="/nosotros" element={<Contacto />} />
@@ -31,13 +29,19 @@ function App() {
             <Route path="/carrito" element={<CartPage />} />
             <Route path="/commit" element={<PrivateRoute element={Commit} />} />
             <Route path="/commit_error" element={<PrivateRoute element={CommitError} />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LoginRoute />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </CartProvider>
     </AuthProvider>
   );
+}
+
+function LoginRoute() {
+  const { user } = useAuth();
+
+  return user ? <Navigate to="/" replace /> : <LoginPage />;
 }
 
 export default App;
