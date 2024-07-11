@@ -49,6 +49,7 @@ export const createApp = ({ productoModel, clienteModel, categoriaModel, marcaMo
   app.use('/detalleVenta', createDetalleVentaRouter({ detalleVentaModel }));
   app.use('/venta', createVentaRouter({ ventaModel }));
 
+
   const PORT = process.env.PORT || 1234;
 
   app.listen(PORT, () => {

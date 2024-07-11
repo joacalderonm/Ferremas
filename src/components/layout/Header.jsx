@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation,useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/24/solid';
 import { useCart } from '../CartContext';
@@ -10,7 +10,8 @@ export const Header = () => {
   const { cart } = useCart();
   const { user, logout } = useAuth();  // Obtén el estado de autenticación y la función de logout
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
     // Cierra el menú cuando se cambia de ruta
     setIsMenuOpen(false);
@@ -29,6 +30,12 @@ export const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/resultadobusqueda?query=${encodeURIComponent(searchTerm)}`);
+    setSearchTerm(''); // Clear the search input
+  };
 
   // Calcula el total de productos en el carrito
   const totalItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
@@ -64,8 +71,20 @@ export const Header = () => {
             <Link to="/nosotros" className="select py-2 px-4 font-bold text-left text-black md:text-left md:py-0">Nosotros</Link>
           </div>
         </div>
-        <div className="buscador1 hidden md:flex items-center mb-4 md:mb-0"></div>
-        
+        <div className="hidden md:flex items-center mb-4 md:mb-0">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Buscar en Ferremas"
+              className="py-2 px-4 rounded-l bg-gray-200 text-black"
+            />
+            <button type="submit" className="py-2 px-4 rounded-r bg-red-700 hover:bg-red-800 text-white">
+              Buscar
+            </button>
+          </form>
+        </div>
         <div className="flex menu items-center justify-between w-full md:w-auto mt-2 md:mt-3">
           <button className="menu-button text-white md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? 'X' : '☰'}

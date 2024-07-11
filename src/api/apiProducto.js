@@ -2,6 +2,25 @@ import axios from 'axios';
 
 const productAPI = 'http://localhost:1234/producto';
 
+export const fetchProductos = async (searchTerm = '') => {
+  try {
+    const response = await axios.get(productAPI);
+    let productos = response.data;
+
+    if (searchTerm) {
+      const lowercasedSearchTerm = searchTerm.toLowerCase();
+      productos = productos.filter((producto) =>
+        producto.nombre.toLowerCase().includes(lowercasedSearchTerm)
+      );
+    }
+
+    return productos;
+  } catch (error) {
+    console.error('Error al obtener los productos:', error);
+    throw error;
+  }
+};
+
 export const fetchProducto = async () => {
   try {
     const response = await axios.get(productAPI);
