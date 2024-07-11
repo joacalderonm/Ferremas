@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { fetchProductos } from '../api/apiProducto'; // Asegúrate de tener esta función para obtener productos
+import { fetchSearchProducto } from '../api/apiProducto'; // Asegúrate de tener esta función para obtener productos
 import Producto from '../components/Producto';
-
 
 const ResultadoBusqueda = ({ marcas, materiales }) => {
   const location = useLocation();
@@ -16,7 +15,7 @@ const ResultadoBusqueda = ({ marcas, materiales }) => {
     const obtenerProductos = async () => {
       setLoading(true);
       try {
-        const resultado = await fetchProductos(query);
+        const resultado = await fetchSearchProducto(query);
         setProductos(resultado);
       } catch (error) {
         console.error('Error al buscar productos:', error);
@@ -49,4 +48,11 @@ const ResultadoBusqueda = ({ marcas, materiales }) => {
   );
 };
 
+ResultadoBusqueda.propTypes = {
+  marcas: [],
+  materiales: [],
+};
+
 export default ResultadoBusqueda;
+
+

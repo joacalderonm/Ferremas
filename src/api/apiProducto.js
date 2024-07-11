@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const productAPI = 'http://localhost:1234/producto';
 
-export const fetchProductos = async (searchTerm = '') => {
+export const fetchSearchProducto = async (searchTerm = '') => {
   try {
     const response = await axios.get(productAPI);
     let productos = response.data;

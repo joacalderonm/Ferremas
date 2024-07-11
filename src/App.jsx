@@ -17,6 +17,7 @@ import ResultadoBusqueda from './pages/ResultadoBusqueda';
 
 
 function App() {
+  
   return (
     <AuthProvider>
       <CartProvider>
