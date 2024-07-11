@@ -449,6 +449,25 @@
   .cart-item-info {
       text-align: left;
   }
+  @keyframes tools-pattern {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100px 100px;
+    }
+  }
+  
+  .bg-tools-pattern {
+    background-image: url('https://i.pinimg.com/736x/a0/02/43/a00243e8dd833b36a5fa32640213f8a0.jpg'); /* Ruta a la imagen del patrón de herramientas */
+    background-size: 200px 200px;
+    background-repeat: repeat;
+  }
+  
+  .animate-tools-pattern {
+    animation: tools-pattern 10s linear infinite;
+  }
+  
 }
 
 
