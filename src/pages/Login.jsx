@@ -36,7 +36,7 @@ const LoginPage = () => {
       </div>
       <div className="w-1/2 bg-gray-900 text-white flex flex-col justify-center p-8">
         <h2 className="text-4xl font-bold mb-4 text-center">Bienvenido de Vuelta</h2>
-        <p className="text-center mb-6">¿No tienes cuenta? <Link to="/register" className="text-blue-400 hover:underline">Regístrate</Link></p>
+        <p className="text-center mb-6">¿No tienes cuenta? <Link to="/registro" className="text-blue-400 hover:underline">Regístrate</Link></p>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-300 mb-2">Usuario:</label>

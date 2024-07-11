@@ -14,6 +14,7 @@ import NotFound from './components/layout/NotFound';
 import LoginPage from './pages/Login';
 import PrivateRoute from './auth/PrivateRoute';
 import ResultadoBusqueda from './pages/ResultadoBusqueda';
+import Registro from './pages/Registro';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/commit" element={<PrivateRoute element={Commit} />} />
             <Route path="/commit_error" element={<PrivateRoute element={CommitError} />} />
             <Route path="/login" element={<LoginRoute />} />
+            <Route path="/registro" element={<Registro />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

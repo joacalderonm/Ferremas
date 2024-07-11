@@ -85,11 +85,9 @@ export class ClienteController {
                 contraseña: hashedPassword
             };
             
-            const newCliente = await this.clienteModel.create({ input: newClienteData });
-
+            await this.clienteModel.create({ input: newClienteData });
             res.status(201).json({ 
                 message: 'Cliente creado exitosamente',
-                user: { id: newCliente.id, username: newCliente.username, email: newCliente.email }
             });
         } catch (error) {
             console.error('Error creating client:', error);
