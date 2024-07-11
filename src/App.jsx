@@ -35,7 +35,7 @@ function App() {
             <Route path="/commit" element={<PrivateRoute element={Commit} />} />
             <Route path="/commit_error" element={<PrivateRoute element={CommitError} />} />
             <Route path="/login" element={<LoginRoute />} />
-            <Route path="/registro" element={<Registro />} />
+            <Route path="/registro" element={<RegistroRoute />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
@@ -48,6 +48,12 @@ function LoginRoute() {
   const { user } = useAuth();
 
   return user ? <Navigate to="/" replace /> : <LoginPage />;
+}
+
+function RegistroRoute() {
+  const { user } = useAuth();
+
+  return user ? <Navigate to="/" replace /> : <Registro />;
 }
 
 export default App;
