@@ -3,7 +3,7 @@ import mysql from 'mysql2/promise';
 export const dbConfig  = {
     host: 'localhost',
     user: 'root',
-    port: 4406,
+    port: 3306,
     password: '',
     database: 'ferremas'
 }

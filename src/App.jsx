@@ -13,7 +13,6 @@ import CommitError from './pages/CommitError';
 import NotFound from './components/layout/NotFound';
 import LoginPage from './pages/Login';
 import PrivateRoute from './auth/PrivateRoute';
-import { Navigate } from 'react-router-dom';
 import ResultadoBusqueda from './pages/ResultadoBusqueda';
 
 

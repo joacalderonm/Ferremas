@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext';
 import { useCart } from '../components/CartContext';
 import { fetchCarrito, fetchCreate } from '../api/apiWebpayPlus';
+import "../css/Styles.css";
 
 
 const CartPage = () => {
+    const { user } = useAuth();
+    const navigate = useNavigate();
     const { cart, dispatch, getStock } = useCart();
     const [deliveryOption, setDeliveryOption] = useState('retiro');
     const [confirmPurchase, setConfirmPurchase] = useState(false);
@@ -11,7 +16,11 @@ const CartPage = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [stock, setStock] = useState({});
 
+    
+
     useEffect(() => {
+        
+
         const fetchStock = async () => {
             try {
                 const stocks = await Promise.all(cart.map(item => getStock(item.productoID)));
@@ -61,11 +70,16 @@ const CartPage = () => {
     };
 
     const handleConfirmPurchase = async () => {
+        if (!user) {
+            navigate('/login'); // Redirige al usuario a la página de inicio de sesión si no está autenticado
+            return;
+        }
+        
         if (isProcessing) return; // Evitar múltiples clics
         setIsProcessing(true);
 
         const carritoData = {
-            clienteID: 1,
+            clienteID: user.id,
             productos: cart.map(item => ({
                 productoID: item.productoID,
                 cantidad: item.quantity,
