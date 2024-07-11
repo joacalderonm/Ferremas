@@ -14,7 +14,7 @@ import NotFound from './components/layout/NotFound';
 import LoginPage from './pages/Login';
 import PrivateRoute from './auth/PrivateRoute';
 import { Navigate } from 'react-router-dom';
-
+import ResultadoBusqueda from './pages/ResultadoBusqueda';
 function App() {
   
   return (
@@ -28,7 +28,8 @@ function App() {
             <Route path="/nosotros" element={<Contacto />} />
             <Route path="/categoria/:id" element={<CategoriaDetalle />} />
             <Route path="/producto/:id" element={<ProductoDetalle />} />
-            <Route path="/carrito" element={<CartPage />} />
+            <Route path="/carrito" element={<CartPage />} /> 
+            <Route path="/resultadobusqueda" element={<ResultadoBusqueda />}/>
             <Route path="/commit" element={<PrivateRoute element={Commit} />} />
             <Route path="/commit_error" element={<PrivateRoute element={CommitError} />} />
             <Route path="/login" element={<LoginPage />} />
