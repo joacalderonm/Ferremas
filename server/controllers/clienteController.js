@@ -117,4 +117,23 @@ export class ClienteController {
             return res.status(401).json({ error: 'Invalid token' });
         }
     }
+
+    GetByHistory = async (req, res) => {
+        const token = req.cookies.access_token;
+        if (!token) {
+            return res.status(401).json({ error: 'No token provided' });
+        }
+
+        try {
+            const data = jwt.verify(token, JWT_SECRET);
+            const user = await this.clienteModel.GetByHistory({ clienteID: data.clienteID });
+            if (!user) {
+                return res.status(404).json({ error: 'Usuario no encontrado' });
+            }
+            res.status(200).json(user);
+        } catch {
+            return res.status(401).json({ error: 'Invalid token' });
+        }
+    }
+
 }

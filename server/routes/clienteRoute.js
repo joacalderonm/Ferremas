@@ -9,6 +9,7 @@ export const createClienteRouter = ({ clienteModel }) => {
   clienteRouter.post('/login', clienteController.login);
   clienteRouter.post('/register', clienteController.create);
   clienteRouter.post('/logout', clienteController.logout);
+  clienteRouter.get('/history', authenticateToken, clienteController.GetByHistory)
 
   clienteRouter.get('/me', authenticateToken, clienteController.getUser);
 

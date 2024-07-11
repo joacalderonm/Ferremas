@@ -15,6 +15,7 @@ import LoginPage from './pages/Login';
 import PrivateRoute from './auth/PrivateRoute';
 import ResultadoBusqueda from './pages/ResultadoBusqueda';
 import Registro from './pages/Registro';
+import MisCompras from './pages/MisCompras';
 
 
 function App() {

@@ -47,3 +47,13 @@ export const getMe = async () => {
     throw error;
   }
 };
+
+export const GetByHistory = async () => {
+  try {
+    const response = await api.get('/history');
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el historial de compras:', error);
+    throw error;
+  }
+}
